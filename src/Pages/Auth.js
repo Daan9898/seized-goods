@@ -4,29 +4,17 @@ import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
 
-const Auth = () => {
+const Auth = ({ onLogin }) => {
   const [view, setView] = useState("login"); // "login", "register", or "forgot"
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Navigation hook
 
   const handleLogin = (email, password) => {
-    console.log("Logging in with:", { email, password });
-    navigate("/dashboard");
-  };
-
-  const handleRegister = (accountData) => {
-    console.log("Registering with:", accountData);
-    setView("login");
-  };
-
-  const handleForgotPassword = (email) => {
-    console.log("Password reset for:", email);
-    setView("login");
+    onLogin(email, password, navigate); // Pass navigate to the onLogin handler
   };
 
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="flex flex-col lg:flex-row justify-center min-h-screen">
-        {/* Left Section - Background Image */}
         <div
           className="hidden lg:block lg:w-2/5 bg-cover"
           style={{
@@ -35,7 +23,6 @@ const Auth = () => {
           }}
         ></div>
 
-        {/* Right Section - Form */}
         <div className="flex flex-col items-center w-full px-6 py-8 md:px-12 lg:px-16 lg:w-3/5">
           <div className="w-full text-center">
             <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
@@ -56,9 +43,11 @@ const Auth = () => {
           </div>
 
           <div className="mt-6 w-full">
-            {view === "login" && <Login onLogin={handleLogin} onSwitch={() => setView("register")} onForgot={() => setView("forgot")} />}
-            {view === "register" && <Register onRegister={handleRegister} onSwitch={() => setView("login")} />}
-            {view === "forgot" && <ForgotPassword onReset={handleForgotPassword} onSwitch={() => setView("login")} />}
+            {view === "login" && (
+              <Login onLogin={handleLogin} onSwitch={() => setView("register")} onForgot={() => setView("forgot")} />
+            )}
+            {view === "register" && <Register onSwitch={() => setView("login")} />}
+            {view === "forgot" && <ForgotPassword onSwitch={() => setView("login")} />}
           </div>
         </div>
       </div>

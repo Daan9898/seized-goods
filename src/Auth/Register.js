@@ -2,22 +2,48 @@ import React, { useState } from "react";
 
 const Register = ({ onRegister, onSwitch }) => {
   const [accountType, setAccountType] = useState("organization");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [organizationName, setOrganizationName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [organizationName, setOrganizationName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [contactPerson, setContactPerson] = useState("");
+  const [phone, setPhone] = useState("");
+  const [categories, setCategories] = useState([]); // e.g., [1,2]
+  const [streetName, setStreetName] = useState("");
+  const [number, setNumber] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("Netherlands");
+  const [zipCode, setZipCode] = useState("");
+  const [qualifications, setQualifications] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister({
-      email,
-      password,
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const accountData = {
+      name: organizationName,
       firstName,
       lastName,
-      organizationName,
+      email,
+      contactPerson,
+      phone,
+      categories,
+      streetName,
+      number,
+      city,
+      country,
+      zipCode,
+      qualifications,
+      password,
       accountType,
-    });
+    };
+
+    onRegister(accountData);
   };
 
   return (
@@ -50,7 +76,6 @@ const Register = ({ onRegister, onSwitch }) => {
 
       {accountType === "organization" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Organization Name */}
           <div className="col-span-1 md:col-span-2">
             <label className="block mb-2 text-sm text-gray-600">
               Organization Name
@@ -64,30 +89,98 @@ const Register = ({ onRegister, onSwitch }) => {
             />
           </div>
 
-          {/* Organization Registration Number */}
           <div className="col-span-1">
             <label className="block mb-2 text-sm text-gray-600">
-              Organization Registration Number
+              Contact Person Name
             </label>
             <input
               type="text"
-              placeholder="Registration Number"
+              placeholder="Contact Person"
+              value={contactPerson}
+              onChange={(e) => setContactPerson(e.target.value)}
               className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
 
-          {/* Proof of Eligibility */}
+          <div className="col-span-1">
+            <label className="block mb-2 text-sm text-gray-600">Phone</label>
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+            />
+          </div>
+
           <div className="col-span-1">
             <label className="block mb-2 text-sm text-gray-600">
-              Proof of Eligibility
+              Qualifications
             </label>
             <input
-              type="file"
+              type="text"
+              placeholder="Qualifications"
+              value={qualifications}
+              onChange={(e) => setQualifications(e.target.value)}
               className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
         </div>
       )}
+
+      {/* Address Fields */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block mb-2 text-sm text-gray-600">Street Name</label>
+          <input
+            type="text"
+            placeholder="Street Name"
+            value={streetName}
+            onChange={(e) => setStreetName(e.target.value)}
+            className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm text-gray-600">Number</label>
+          <input
+            type="text"
+            placeholder="Number"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm text-gray-600">City</label>
+          <input
+            type="text"
+            placeholder="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm text-gray-600">Country</label>
+          <input
+            type="text"
+            placeholder="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block mb-2 text-sm text-gray-600">Zip Code</label>
+          <input
+            type="text"
+            placeholder="Zip Code"
+            value={zipCode}
+            onChange={(e) => setZipCode(e.target.value)}
+            className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          />
+        </div>
+      </div>
 
       {/* Common Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -131,7 +224,16 @@ const Register = ({ onRegister, onSwitch }) => {
             className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
           />
         </div>
-        
+        <div>
+          <label className="block mb-2 text-sm text-gray-600">Confirm Password</label>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          />
+        </div>
       </div>
 
       {/* Submit Button */}
