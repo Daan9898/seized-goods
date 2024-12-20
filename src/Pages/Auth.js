@@ -6,10 +6,11 @@ import ForgotPassword from "../Auth/ForgotPassword";
 
 const Auth = ({ onLogin }) => {
   const [view, setView] = useState("login"); // "login", "register", or "forgot"
-  const navigate = useNavigate(); // Navigation hook
+  const navigate = useNavigate();
 
   const handleLogin = (email, password) => {
-    onLogin(email, password, navigate); // Pass navigate to the onLogin handler
+    onLogin(email, password); // Call the App-level login function
+    navigate("/browse-items"); // Navigate after login
   };
 
   return (

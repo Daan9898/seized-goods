@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "name": "Leather Sofa",
+    "category": "Furniture",
+    "condition": "Used",
+    "urgency": "High",
+    "value": "€899",
+    "description": "Spacious leather sofa with a modern design and durable material.",
+    "images": [
+      "https://via.placeholder.com/300?text=Sofa+Front",
+      "https://via.placeholder.com/300?text=Sofa+Side",
+      "https://via.placeholder.com/300?text=Sofa+Back"
+    ],
+    "details": {
+      "brand": "ComfortZone",
+      "features": ["Durable Material", "Modern Design", "Seats 3"],
+      "eligibility": "Ideal for living rooms and lounges.",
+      "location": "Austin, TX"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Bluetooth Speaker",
+    "category": "Electronics",
+    "condition": "New",
+    "urgency": "Normal",
+    "value": "€45",
+    "description": "Portable Bluetooth speaker with excellent sound quality.",
+    "images": [
+      "https://via.placeholder.com/300?text=Speaker+Front",
+      "https://via.placeholder.com/300?text=Speaker+Top",
+      "https://via.placeholder.com/300?text=Speaker+Side"
+    ],
+    "details": {
+      "brand": "SoundPro",
+      "features": ["Portable", "High Bass", "10-Hour Battery Life"],
+      "eligibility": "Perfect for outdoor use.",
+      "location": "Berlin, Germany"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Dining Table",
+    "category": "Furniture",
+    "condition": "Used",
+    "urgency": "High",
+    "value": "€320",
+    "description": "Solid wooden dining table with a polished finish, seats six.",
+    "images": [
+      "https://via.placeholder.com/300?text=Table+Top",
+      "https://via.placeholder.com/300?text=Table+Side",
+      "https://via.placeholder.com/300?text=Table+Legs"
+    ],
+    "details": {
+      "brand": "HomeCraft",
+      "features": ["Solid Wood", "Polished Finish", "Seats 6"],
+      "eligibility": "Great for dining areas.",
+      "location": "London, UK"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Smartphone",
+    "category": "Electronics",
+    "condition": "Refurbished",
+    "urgency": "Normal",
+    "value": "€299",
+    "description": "64GB smartphone with a 12MP camera and fast performance.",
+    "images": [
+      "https://via.placeholder.com/300?text=Phone+Front",
+      "https://via.placeholder.com/300?text=Phone+Back",
+      "https://via.placeholder.com/300?text=Phone+Side"
+    ],
+    "details": {
+      "brand": "TechOne",
+      "features": ["12MP Camera", "64GB Storage", "Fast Performance"],
+      "eligibility": "Ideal for personal or business use.",
+      "location": "New York, USA"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Winter Jacket",
+    "category": "Clothing",
+    "condition": "New",
+    "urgency": "High",
+    "value": "€89",
+    "description": "Insulated winter jacket, perfect for cold weather.",
+    "images": [
+      "https://via.placeholder.com/300?text=Jacket+Front",
+      "https://via.placeholder.com/300?text=Jacket+Back",
+      "https://via.placeholder.com/300?text=Jacket+Detail"
+    ],
+    "details": {
+      "brand": "SnowGear",
+      "features": ["Insulated", "Waterproof", "Windproof"],
+      "eligibility": "Suitable for outdoor adventures.",
+      "location": "Oslo, Norway"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Bookshelf",
+    "category": "Furniture",
+    "condition": "Used",
+    "urgency": "Normal",
+    "value": "€60",
+    "description": "Compact wooden bookshelf with a classic design.",
+    "images": [
+      "https://via.placeholder.com/300?text=Bookshelf+Front",
+      "https://via.placeholder.com/300?text=Bookshelf+Side",
+      "https://via.placeholder.com/300?text=Bookshelf+Detail"
+    ],
+    "details": {
+      "brand": "ShelfSpace",
+      "features": ["Compact Design", "Classic Style", "Durable Wood"],
+      "eligibility": "Great for home or office use.",
+      "location": "Tokyo, Japan"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Kitchen Blender",
+    "category": "Home Appliances",
+    "condition": "New",
+    "urgency": "Normal",
+    "value": "€49",
+    "description": "High-speed blender for smoothies and other recipes.",
+    "images": [
+      "https://via.placeholder.com/300?text=Blender+Front",
+      "https://via.placeholder.com/300?text=Blender+Top",
+      "https://via.placeholder.com/300?text=Blender+Blade"
+    ],
+    "details": {
+      "brand": "BlendMaster",
+      "features": ["High Speed", "Durable Blades", "Easy Cleaning"],
+      "eligibility": "Perfect for home kitchens.",
+      "location": "Paris, France"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Gaming Chair",
+    "category": "Furniture",
+    "condition": "New",
+    "urgency": "High",
+    "value": "€149",
+    "description": "Comfortable gaming chair with adjustable height and recline.",
+    "images": [
+      "https://via.placeholder.com/300?text=Chair+Front",
+      "https://via.placeholder.com/300?text=Chair+Side",
+      "https://via.placeholder.com/300?text=Chair+Back"
+    ],
+    "details": {
+      "brand": "GamerZone",
+      "features": ["Adjustable Height", "Recline Function", "Ergonomic Design"],
+      "eligibility": "Ideal for gaming or office setups.",
+      "location": "Berlin, Germany"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Yoga Mat",
+    "category": "Fitness",
+    "condition": "New",
+    "urgency": "Normal",
+    "value": "€20",
+    "description": "Non-slip yoga mat for workouts and stretching.",
+    "images": [
+      "https://via.placeholder.com/300?text=Mat+Rolled",
+      "https://via.placeholder.com/300?text=Mat+Flat",
+      "https://via.placeholder.com/300?text=Mat+Detail"
+    ],
+    "details": {
+      "brand": "FitPro",
+      "features": ["Non-Slip", "Durable", "Lightweight"],
+      "eligibility": "Perfect for yoga enthusiasts.",
+      "location": "Mumbai, India"
+    }
+  },
+  {
+    "id": 10,
+    "name": "Men's Watch",
+    "category": "Accessories",
+    "condition": "New",
+    "urgency": "Normal",
+    "value": "€120",
+    "description": "Elegant men's wristwatch with a leather strap.",
+    "images": [
+      "https://via.placeholder.com/300?text=Watch+Face",
+      "https://via.placeholder.com/300?text=Watch+Strap",
+      "https://via.placeholder.com/300?text=Watch+Detail"
+    ],
+    "details": {
+      "brand": "TimeMasters",
+      "features": ["Leather Strap", "Water-Resistant", "Elegant Design"],
+      "eligibility": "Great for formal or casual wear.",
+      "location": "Rome, Italy"
+    }
+  },
+  {
+    "id": 11,
+    "name": "Desk Lamp",
+    "category": "Home Decor",
+    "condition": "Used",
+    "urgency": "Normal",
+    "value": "€25",
+    "description": "Adjustable desk lamp with LED lighting.",
+    "images": [
+      "https://via.placeholder.com/300?text=Lamp+Front",
+      "https://via.placeholder.com/300?text=Lamp+Side",
+      "https://via.placeholder.com/300?text=Lamp+Detail"
+    ],
+    "details": {
+      "brand": "BrightLight",
+      "features": ["Adjustable Angle", "Energy Efficient", "LED Lighting"],
+      "eligibility": "Suitable for desks or nightstands.",
+      "location": "San Francisco, USA"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Wireless Keyboard",
+    "category": "Electronics",
+    "condition": "New",
+    "urgency": "Normal",
+    "value": "€35",
+    "description": "Slim wireless keyboard with ergonomic keys.",
+    "images": [
+      "https://via.placeholder.com/300?text=Keyboard+Front",
+      "https://via.placeholder.com/300?text=Keyboard+Side",
+      "https://via.placeholder.com/300?text=Keyboard+Detail"
+    ],
+    "details": {
+      "brand": "KeyZone",
+      "features": ["Ergonomic Design", "Wireless", "Long Battery Life"],
+      "eligibility": "Great for office or home use.",
+      "location": "Toronto, Canada"
+    }
+  }
+]
