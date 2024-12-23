@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import apiClient from "../services/apiClient";
 
 const Register = ({ onRegister, onSwitch }) => {
   const [accountType, setAccountType] = useState("organization");
+  const [selectedCategoryId, setSelectedCategoryId] = useState([]);
   const [organizationName, setOrganizationName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -17,6 +19,21 @@ const Register = ({ onRegister, onSwitch }) => {
   const [country, setCountry] = useState("Netherlands");
   const [zipCode, setZipCode] = useState("");
   const [qualifications, setQualifications] = useState("");
+  const [error, setError] = useState(null);
+
+  // Fetch all categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await apiClient.get("/api/v1/categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.log(error);
+        setError("Failed to fetch categories.");
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +49,7 @@ const Register = ({ onRegister, onSwitch }) => {
       email,
       contactPerson,
       phone,
-      categories,
+      categories: selectedCategoryId,
       streetName,
       number,
       city,
@@ -131,7 +148,9 @@ const Register = ({ onRegister, onSwitch }) => {
       {/* Address Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block mb-2 text-sm text-gray-600">Street Name</label>
+          <label className="block mb-2 text-sm text-gray-600">
+            Street Name
+          </label>
           <input
             type="text"
             placeholder="Street Name"
@@ -182,6 +201,39 @@ const Register = ({ onRegister, onSwitch }) => {
         </div>
       </div>
 
+      {/* Category select input */}
+      <div>
+        <label className="block mb-2 text-sm text-gray-600">
+          Select Interested Categories
+        </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {categories.map((category) => (
+            <div key={category.id} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`category-${category.id}`}
+                value={category.id}
+                checked={selectedCategoryId?.includes(category.id)}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setSelectedCategoryId((prev) =>
+                    e.target.checked
+                      ? [...(prev || []), value]
+                      : prev.filter((id) => id !== value)
+                  );
+                }}
+                className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring focus:ring-blue-500"
+              />
+              <label
+                htmlFor={`category-${category.id}`}
+                className="ml-2 text-sm text-gray-600"
+              >
+                {category.name}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
       {/* Common Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -205,7 +257,9 @@ const Register = ({ onRegister, onSwitch }) => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm text-gray-600">Email Address</label>
+          <label className="block mb-2 text-sm text-gray-600">
+            Email Address
+          </label>
           <input
             type="email"
             placeholder="Email Address"
@@ -225,7 +279,9 @@ const Register = ({ onRegister, onSwitch }) => {
           />
         </div>
         <div>
-          <label className="block mb-2 text-sm text-gray-600">Confirm Password</label>
+          <label className="block mb-2 text-sm text-gray-600">
+            Confirm Password
+          </label>
           <input
             type="password"
             placeholder="Confirm Password"

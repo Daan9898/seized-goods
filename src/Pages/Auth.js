@@ -3,14 +3,30 @@ import { useNavigate } from "react-router-dom";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
+import apiClient from "../services/apiClient";
 
 const Auth = ({ onLogin }) => {
   const [view, setView] = useState("login"); // "login", "register", or "forgot"
   const navigate = useNavigate();
 
   const handleLogin = (email, password) => {
-    onLogin(email, password); // Call the App-level login function
-    navigate("/browse-items"); // Navigate after login
+    onLogin(email, password);
+    navigate("/browse-items");
+  };
+
+  const handleRegister = async (accountData) => {
+    try {
+      const response = await apiClient.post(
+        "/api/v1/organizations/register",
+        accountData
+      );
+      console.log("Registration successful:", response.data);
+      alert("Registration successful! Please log in.");
+      setView("login");
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -45,10 +61,21 @@ const Auth = ({ onLogin }) => {
 
           <div className="mt-6 w-full">
             {view === "login" && (
-              <Login onLogin={handleLogin} onSwitch={() => setView("register")} onForgot={() => setView("forgot")} />
+              <Login
+                onLogin={handleLogin}
+                onSwitch={() => setView("register")}
+                onForgot={() => setView("forgot")}
+              />
             )}
-            {view === "register" && <Register onSwitch={() => setView("login")} />}
-            {view === "forgot" && <ForgotPassword onSwitch={() => setView("login")} />}
+            {view === "register" && (
+              <Register
+                onRegister={handleRegister}
+                onSwitch={() => setView("login")}
+              />
+            )}
+            {view === "forgot" && (
+              <ForgotPassword onSwitch={() => setView("login")} />
+            )}
           </div>
         </div>
       </div>
