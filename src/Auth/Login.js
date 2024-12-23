@@ -1,16 +1,34 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiClient from "../services/apiClient";
 
-const Login = ({ onLogin, onSwitch, onForgot }) => {
+const Login = ({ onSwitch, onForgot }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(email, password);
+    setError(null);
+
+    try {
+      await apiClient.post(
+        "/api/v1/auth/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      navigate("/browse-items");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && <p className="text-red-500 text-sm">{error}</p>}
       <div>
         <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
           Email Address
