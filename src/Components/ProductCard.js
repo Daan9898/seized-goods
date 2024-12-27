@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   const handleRequestClick = () => {
-    navigate(`/product/${product.id}`); // Navigate to ProductDetails with the product ID
+    navigate(`/product/${product.id}`);
   };
 
   const getConditionStyle = (condition) => {
@@ -21,14 +21,16 @@ const ProductCard = ({ product }) => {
     <article className="rounded-xl bg-white p-4 shadow-lg hover:shadow-xl hover:scale-105 transform duration-300">
       <div className="relative flex items-end overflow-hidden rounded-xl">
         <img
-          src={product.photo || "https://via.placeholder.com/300"}
+          src={product.images?.[0]?.url || "https://via.placeholder.com/300"}
           alt={product.name}
           className="w-full h-64 object-cover"
         />
       </div>
       <div className="mt-4 p-2">
         <h2 className="text-slate-700 text-lg font-semibold">{product.name}</h2>
-        <p className="mt-1 text-sm text-slate-500 line-clamp-2">{product.description}</p>
+        <p className="mt-1 text-sm text-slate-500 line-clamp-2">
+          {product.description}
+        </p>
         <div className="flex justify-between items-center mt-2">
           <span
             className={`px-2 py-1 text-sm font-medium rounded-lg ${getConditionStyle(
@@ -38,11 +40,13 @@ const ProductCard = ({ product }) => {
             {product.condition}
           </span>
           <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">
-            Urgency: {product.urgency || "Normal"}
+            Category: {product.category?.name || "Unknown"}
           </span>
         </div>
         <div className="mt-3 flex items-center justify-between">
-          <p className="text-lg font-bold text-black">{product.value}</p>
+          <p className="text-lg font-bold text-black">
+            {`$${product.value?.toFixed(2)}`}
+          </p>
           <button
             onClick={handleRequestClick}
             className="flex items-center space-x-1.5 rounded-lg bg-green-500 px-4 py-1.5 text-white hover:bg-green-600"
