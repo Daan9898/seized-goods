@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Auth from './Pages/Auth';
 import BrowseItems from './Pages/BrowseItems';
@@ -14,7 +14,6 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   const handleLogin = (email, password) => {
-    // Mock user data; replace with real authentication logic as needed
     const mockUser = {
       name: 'Patrick Junior',
       email: email,
@@ -47,23 +46,37 @@ const App = () => {
     },
   ]);
 
+  // Custom component to handle conditional rendering
+  const Layout = ({ children }) => {
+    const location = useLocation();
+
+    // Hide navbar on these pages
+    const hideNavbarPaths = ['/', '/login'];
+    const hideNavbar = hideNavbarPaths.includes(location.pathname);
+
+    return (
+      <div className="min-h-screen">
+        {!hideNavbar && <Navbar user={user} />}
+        {children}
+      </div>
+    );
+  };
+
   return (
     <Router>
-  <div className="min-h-screen">
-    <Navbar user={user} />
-    <Routes>
-      <Route path="/" element={user ? <Navigate to="/browse-items" replace /> : <LandingPage />} />
-      <Route path="/login" element={<Auth onLogin={handleLogin} />} />
-      <Route path="/browse-items" element={<BrowseItems />} />
-      <Route path="/product/:id" element={<ProductDetails products={mockProducts} />} />
-      <Route path="/request-submission" element={<RequestSubmission />} />
-      <Route path="/my-requests" element={<MyRequests requests={userRequests} />} />
-      <Route path="/confirmation" element={<Confirmation />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
-  </div>
-</Router>
-
+      <Layout>
+        <Routes>
+          <Route path="/" element={user ? <Navigate to="/browse-items" replace /> : <LandingPage />} />
+          <Route path="/login" element={<Auth onLogin={handleLogin} />} />
+          <Route path="/browse-items" element={<BrowseItems />} />
+          <Route path="/product/:id" element={<ProductDetails products={mockProducts} />} />
+          <Route path="/request-submission" element={<RequestSubmission />} />
+          <Route path="/my-requests" element={<MyRequests requests={userRequests} />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 };
 
