@@ -49,21 +49,21 @@ const App = () => {
 
   return (
     <Router>
-      <div className="min-h-screen">
-        {user && <Navbar user={user} />}
-        <Routes>
-          <Route path="/" element={user ? <Navigate to="/browse-items" replace /> : <LandingPage />} />
-          <Route path="/login" element={<Auth onLogin={handleLogin} />} />
-          <Route path="/browse-items" element={<BrowseItems />} />
-          <Route path="/product/:id" element={<ProductDetails products={mockProducts} />} />
-          <Route path="/request-submission" element={<RequestSubmission />} />
-          <Route path="/my-requests" element={<MyRequests requests={userRequests} />} />
-          <Route path="/confirmation" element={<Confirmation />} />
-          {/* Add a catch-all route for 404 pages if needed */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </div>
-    </Router>
+  <div className="min-h-screen">
+    <Navbar user={user} />
+    <Routes>
+      <Route path="/" element={user ? <Navigate to="/browse-items" replace /> : <LandingPage />} />
+      <Route path="/login" element={<Auth onLogin={handleLogin} />} />
+      <Route path="/browse-items" element={<BrowseItems />} />
+      <Route path="/product/:id" element={<ProductDetails products={mockProducts} />} />
+      <Route path="/request-submission" element={<RequestSubmission />} />
+      <Route path="/my-requests" element={<MyRequests requests={userRequests} />} />
+      <Route path="/confirmation" element={<Confirmation />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  </div>
+</Router>
+
   );
 };
 
