@@ -1,28 +1,27 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../services/apiClient";
+import { login, setError } from "../store/authSlice";
 
 const Login = ({ onSwitch, onForgot }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { loading, error } = useSelector((state) => state.auth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+
+    dispatch(setError(null));
 
     try {
-      await apiClient.post(
-        "/api/v1/auth/login",
-        { email, password },
-        { withCredentials: true }
-      );
+      await dispatch(login({ email, password })).unwrap(); // Unwraps and throws errors
       navigate("/browse-items");
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Login failed. Please try again."
-      );
+      console.error("Login failed:", err);
     }
   };
 
@@ -55,9 +54,12 @@ const Login = ({ onSwitch, onForgot }) => {
       </div>
       <button
         type="submit"
-        className="w-full px-6 py-3 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
+        disabled={loading}
+        className={`w-full px-6 py-3 text-sm text-white ${
+          loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+        } rounded-md focus:outline-none`}
       >
-        Login
+        {loading ? "Logging in..." : "Login"}
       </button>
       <div className="mt-4 text-sm">
         <button onClick={onForgot} className="text-blue-500 hover:underline">

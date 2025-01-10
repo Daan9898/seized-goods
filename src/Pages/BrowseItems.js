@@ -14,7 +14,7 @@ const BrowseItems = () => {
       try {
         const response = await apiClient.get("/api/v1/categories");
         if (Array.isArray(response.data)) {
-          setItems(response.data); 
+          setCategories(response.data);
         } else {
           throw new Error("Invalid data format from API.");
         }
