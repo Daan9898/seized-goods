@@ -18,7 +18,7 @@ const Login = ({ onSwitch, onForgot }) => {
     dispatch(setError(null));
 
     try {
-      await dispatch(login({ email, password })).unwrap(); // Unwraps and throws errors
+      await dispatch(login({ email, password })).unwrap();
       navigate("/browse-items");
     } catch (err) {
       console.error("Login failed:", err);
