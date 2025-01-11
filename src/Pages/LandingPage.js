@@ -1,19 +1,72 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Hero Section */}
-      <header className="bg-white shadow">
+    <div className="min-h-screen flex flex-col">
+      {/* Sticky Navbar */}
+      <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-800">Renieuw</h1>
-          <div className="flex justify-center space-x-4">
-            <Link to="/Login" className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg text-white font-semibold">
-            Login
+          {/* Logo Section */}
+          <div>
+            <Link to="/" className="h-10 w-10 self-center mr-2">
+              <span className="text-2xl no-underline text-gray-800 hover:text-green-600 font-sans font-bold">
+                Renieuw
+              </span>
+              <br />
+              <span className="text-xs text-gray-500">Beautiful New Tagline</span>
             </Link>
-            <Link to="/Register" className="px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-blue-600 font-semibold">
-               Register
+          </div>
+
+          {/* Navigation Links Section */}
+          <nav className="hidden md:flex space-x-8">
+            <a
+              href="#welcome"
+              className="text-md text-gray-800 hover:text-green-500 transition-all duration-300"
+            >
+              Welcome
+            </a>
+            <a
+              href="#how-it-works"
+              className="text-md text-gray-800 hover:text-green-500 transition-all duration-300"
+            >
+              How It Works
+            </a>
+            <a
+              href="#features"
+              className="text-md text-gray-800 hover:text-green-500 transition-all duration-300"
+            >
+              Features
+            </a>
+            <a
+              href="#testimonials"
+              className="text-md text-gray-800 hover:text-green-500 transition-all duration-300"
+            >
+              Testimonials
+            </a>
+            <a
+              href="#contact"
+              className="text-md text-gray-800 hover:text-green-500 transition-all duration-300"
+            >
+              Contact Us
+            </a>
+          </nav>
+
+          {/* Login / Sign Up Section */}
+          <div className="flex items-center space-x-4">
+            <Link
+              to="/Login"
+              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
+            >
+              Login
+            </Link>
+            <Link
+              to="/Register"
+              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-green-500 rounded-lg text-sm font-semibold"
+            >
+              Sign Up
             </Link>
           </div>
         </div>
@@ -21,187 +74,572 @@ const LandingPage = () => {
 
       <main className="flex-grow">
         {/* Welcome Banner */}
-        <section className="bg-cover bg-center h-96" style={{ backgroundImage: 'url(https://via.placeholder.com/1500x600)' }}>
-          <div className="bg-black bg-opacity-50 h-full flex items-center justify-center">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-white mb-4">Empowering Communities, One Donation at a Time</h2>
-              <p className="text-lg text-gray-200">Join us in making a difference by redistributing resources to those in need.</p>
+        <section id="welcome" className="py-32 bg-white">
+            <div className="px-12 mx-auto max-w-7xl">
+                <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
+                <h1 className="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight">
+                    <span>Start</span>{' '}
+                    <span className="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-purple-500 lg:inline">
+                    building a buzz
+                    </span>{' '}
+                    <span>around your product?</span>
+                </h1>
+                <p className="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
+                    Start gaining the traction you've always wanted with our next-level
+                    templates and designs. Crafted to help you tell your story.
+                </p>
+                <div className="mb-4 space-x-0 md:space-x-2 md:mb-8">
+                    <a
+                    href="/login"
+                    className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-green-400 rounded-2xl sm:w-auto sm:mb-0"
+                    >
+                    Get Started
+                    <svg
+                        className="w-4 h-4 ml-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                        fillRule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                        />
+                    </svg>
+                    </a>
+                    <a
+                    href="#"
+                    className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg bg-gray-100 rounded-2xl sm:w-auto sm:mb-0"
+                    >
+                    Learn More
+                    <svg
+                        className="w-4 h-4 ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                        />
+                    </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div className="w-full mx-auto mt-20 text-center md:w-10/12">
+            <div className="relative z-0 w-full mt-8">
+                <div className="relative overflow-hidden shadow-2xl">
+                <div className="flex items-center flex-none px-4 bg-green-400 rounded-b-none h-11 rounded-xl">
+                    <div className="flex space-x-1.5">
+                    <div className="w-3 h-3 border-2 border-white rounded-full"></div>
+                    <div className="w-3 h-3 border-2 border-white rounded-full"></div>
+                    <div className="w-3 h-3 border-2 border-white rounded-full"></div>
+                    </div>
+                </div>
+                <img
+                    src="https://cdn.devdojo.com/images/march2021/green-dashboard.jpg"
+                    alt="Dashboard Preview"
+                    className="w-full"
+                />
+                </div>
+            </div>
+            </div>
+        </div>
+        </section>
+
+    {/* How It Works Section */}
+    <section id="how-it-works" className="relative pt-16">
+      <div className="container mx-auto">
+        <div className="flex flex-wrap items-center">
+          {/* Left Side Card */}
+          <div className="w-10/12 md:w-6/12 lg:w-4/12 px-12 md:px-4 mr-auto ml-auto -mt-78">
+            <div className="relative flex flex-col min-w-0 break-words  w-full mb-6 shadow-lg rounded-lg bg-green-400">
+              <img
+                alt="Giving new life to goods"
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+                className="w-full align-middle rounded-t-lg"
+              />
+              <blockquote className="relative p-8 mb-4">
+                <svg
+                  preserveAspectRatio="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 583 95"
+                  className="absolute left-0 w-full block h-95-px -top-94-px"
+                >
+                </svg>
+                <h4 className="text-xl font-bold text-white">
+                  Give Resources a New Life
+                </h4>
+                <p className="text-md font-light mt-2 text-white">
+                  We believe in creating a better society by redistributing seized goods to organizations that need them. Join us in making a difference today.
+                </p>
+              </blockquote>
             </div>
           </div>
-        </section>
 
-        {/* How It Works Section */}
-        <section className="py-16 bg-gray-100">
-            <div className="container mx-auto text-center px-6">
-            <h2 className="text-3xl font-bold mb-8">How It Works</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <div className="p-6 bg-white rounded-lg shadow">
-                <img
-                    src="https://via.placeholder.com/100"
-                    alt="Browse Items"
-                    className="mx-auto mb-4"
-                />
-                <h3 className="text-lg font-bold mb-2">Browse Items</h3>
-                <p>Discover a wide range of surplus goods available for repurposing.</p>
-                </div>
-                <div className="p-6 bg-white rounded-lg shadow">
-                <img
-                    src="https://via.placeholder.com/100"
-                    alt="Submit a Request"
-                    className="mx-auto mb-4"
-                />
-                <h3 className="text-lg font-bold mb-2">Submit a Request</h3>
-                <p>Provide your organization details and intended use for the item.</p>
-                </div>
-                <div className="p-6 bg-white rounded-lg shadow">
-                <img
-                    src="https://via.placeholder.com/100"
-                    alt="Receive Allocation"
-                    className="mx-auto mb-4"
-                />
-                <h3 className="text-lg font-bold mb-2">Receive Allocation</h3>
-                <p>Get approved, collect your items, and make a difference.</p>
-                </div>
-            </div>
-            </div>
-        </section>
-
-        {/* Featured Items Section */}
-        <section className="py-16">
-            <div className="container mx-auto px-6">
-            <h2 className="text-3xl font-bold text-center mb-8">Featured Items</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {[1, 2, 3, 4].map((item) => (
-                <div
-                    key={item}
-                    className="p-4 bg-white rounded-lg shadow hover:shadow-lg transition"
-                >
-                    <img
-                    src={`https://via.placeholder.com/300?text=Item+${item}`}
-                    alt={`Item ${item}`}
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                    />
-                    <h3 className="text-lg font-bold mb-2">Featured Item {item}</h3>
-                    <p className="text-gray-600">High-quality surplus ready for repurposing.</p>
-                </div>
-                ))}
-            </div>
-            </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-16 bg-gray-100">
-            <div className="container mx-auto text-center px-6">
-            <h2 className="text-3xl font-bold mb-8">What Our Users Say</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                {["A", "B", "C"].map((testimonial) => (
-                <div
-                    key={testimonial}
-                    className="p-6 bg-white rounded-lg shadow hover:shadow-lg transition"
-                >
-                    <p className="text-gray-600 italic mb-4">
-                    "This platform has been a game-changer for our organization."
+          {/* Right Side Info Cards */}
+          <div className="w-full md:w-6/12 px-4">
+            <div className="flex flex-wrap">
+              <div className="w-full md:w-6/12 px-4">
+                <div className="relative flex flex-col mt-4">
+                  <div className="px-4 py-5 flex-auto">
+                    <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
+                      <i className="fas fa-box"></i>
+                    </div>
+                    <h6 className="text-xl mb-1 font-semibold">Browse Goods</h6>
+                    <p className="mb-4 text-blueGray-500">
+                      Discover surplus goods under €100 that can be repurposed for social causes.
                     </p>
-                    <h4 className="font-bold">User {testimonial}</h4>
+                  </div>
                 </div>
-                ))}
+                <div className="relative flex flex-col min-w-0">
+                  <div className="px-4 py-5 flex-auto">
+                    <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
+                      <i className="fas fa-clipboard-list"></i>
+                    </div>
+                    <h6 className="text-xl mb-1 font-semibold">Submit Your Request</h6>
+                    <p className="mb-4 text-blueGray-500">
+                      Share your organization's purpose and how you will use the goods to create a positive social impact.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full md:w-6/12 px-4">
+                <div className="relative flex flex-col min-w-0 mt-4">
+                  <div className="px-4 py-5 flex-auto">
+                    <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
+                      <i className="fas fa-check-circle"></i>
+                    </div>
+                    <h6 className="text-xl mb-1 font-semibold">Approval & Collection</h6>
+                    <p className="mb-4 text-blueGray-500">
+                      Once approved, you can collect the items and give them a new purpose, making a lasting impact.
+                    </p>
+                  </div>
+                </div>
+                <div className="relative flex flex-col min-w-0">
+                  <div className="px-4 py-5 flex-auto">
+                    <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
+                      <i className="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h6 className="text-xl mb-1 font-semibold">Make an Impact</h6>
+                    <p className="mb-4 text-blueGray-500">
+                      Join the growing network of organizations creating a better future by giving goods a second life.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+        
+    {/* Features Section */}
+    <section id="features" className="py-16">
+        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+            <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+                <div>
+                <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-green-900 uppercase rounded-full bg-green-200">
+                    Seized Goods
+                </p>
+                </div>
+                <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
+                <span className="relative inline-block">
+                    <svg
+                    viewBox="0 0 52 24"
+                    fill="currentColor"
+                    className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
+                    >
+                    <defs>
+                        <pattern
+                        id="pattern-featured-items"
+                        x="0"
+                        y="0"
+                        width=".135"
+                        height=".30"
+                        >
+                        <circle cx="1" cy="1" r=".7" />
+                        </pattern>
+                    </defs>
+                    <rect
+                        fill="url(#pattern-featured-items)"
+                        width="52"
+                        height="24"
+                    />
+                    </svg>
+                    <span className="relative">Transforming</span>
+                </span>{' '}
+                everyday items into valuable resources
+                </h2>
+                <p className="text-base text-gray-700 md:text-lg">
+                Discover a collection of seized goods available for repurposing to support organizations working towards a better society.
+                </p>
+            </div>
+            <div className="grid max-w-screen-lg mx-auto space-y-6 lg:grid-cols-2 lg:space-y-0 lg:divide-x">
+                <div className="space-y-6 sm:px-16">
+                <div className="flex flex-col max-w-md sm:flex-row">
+                    <div className="mb-4 mr-4">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+                        <svg
+                        className="w-8 h-8 text-green-500 sm:w-10 sm:h-10"
+                        stroke="currentColor"
+                        viewBox="0 0 52 52"
+                        >
+                        <polygon
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                            points="29 13 14 29 25 29 23 39 38 23 27 23"
+                        />
+                        </svg>
+                    </div>
+                    </div>
+                    <div>
+                    <h6 className="mb-3 text-xl font-bold leading-5">
+                        Household Essentials
+                    </h6>
+                    <p className="text-sm text-gray-900">
+                        High-quality everyday items like furniture, electronics, and kitchenware waiting to find a new purpose.
+                    </p>
+                    </div>
+                </div>
+                <div className="flex flex-col max-w-md sm:flex-row">
+                    <div className="mb-4 mr-4">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+                        <svg
+                        className="w-8 h-8 text-green-500 sm:w-10 sm:h-10"
+                        stroke="currentColor"
+                        viewBox="0 0 52 52"
+                        >
+                        <polygon
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                            points="29 13 14 29 25 29 23 39 38 23 27 23"
+                        />
+                        </svg>
+                    </div>
+                    </div>
+                    <div>
+                    <h6 className="mb-3 text-xl font-bold leading-5">
+                        Office Supplies
+                    </h6>
+                    <p className="text-sm text-gray-900">
+                        Desks, chairs, monitors, and more—all available to support your team’s mission without breaking your budget.
+                    </p>
+                    </div>
+                </div>
+                <div className="flex flex-col max-w-md sm:flex-row">
+                    <div className="mb-4 mr-4">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+                        <svg
+                        className="w-8 h-8 text-green-500 sm:w-10 sm:h-10"
+                        stroke="currentColor"
+                        viewBox="0 0 52 52"
+                        >
+                        <polygon
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                            points="29 13 14 29 25 29 23 39 38 23 27 23"
+                        />
+                        </svg>
+                    </div>
+                    </div>
+                    <div>
+                    <h6 className="mb-3 text-xl font-bold leading-5">
+                        Clothing & Accessories
+                    </h6>
+                    <p className="text-sm text-gray-900">
+                        Seized fashion items in excellent condition—available to help those in need.
+                    </p>
+                    </div>
+                </div>
+                </div>
+                <div className="space-y-6 sm:px-16">
+                <div className="flex flex-col max-w-md sm:flex-row">
+                    <div className="mb-4 mr-4">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+                        <svg
+                        className="w-8 h-8 text-green-500 sm:w-10 sm:h-10"
+                        stroke="currentColor"
+                        viewBox="0 0 52 52"
+                        >
+                        <polygon
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                            points="29 13 14 29 25 29 23 39 38 23 27 23"
+                        />
+                        </svg>
+                    </div>
+                    </div>
+                    <div>
+                    <h6 className="mb-3 text-xl font-bold leading-5">
+                        Tools & Equipment
+                    </h6>
+                    <p className="text-sm text-gray-900">
+                        Equip your organization with tools to support renovations, events, or workshops.
+                    </p>
+                    </div>
+                </div>
+                <div className="flex flex-col max-w-md sm:flex-row">
+                    <div className="mb-4 mr-4">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+                        <svg
+                        className="w-8 h-8 text-green-500 sm:w-10 sm:h-10"
+                        stroke="currentColor"
+                        viewBox="0 0 52 52"
+                        >
+                        <polygon
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                            points="29 13 14 29 25 29 23 39 38 23 27 23"
+                        />
+                        </svg>
+                    </div>
+                    </div>
+                    <div>
+                    <h6 className="mb-3 text-xl font-bold leading-5">
+                        Recreational Goods
+                    </h6>
+                    <p className="text-sm text-gray-900">
+                        Sports equipment, games, and more for community centers and youth programs.
+                    </p>
+                    </div>
+                </div>
+                <div className="flex flex-col max-w-md sm:flex-row">
+                    <div className="mb-4 mr-4">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-50">
+                        <svg
+                        className="w-8 h-8 text-green-500 sm:w-10 sm:h-10"
+                        stroke="currentColor"
+                        viewBox="0 0 52 52"
+                        >
+                        <polygon
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill="none"
+                            points="29 13 14 29 25 29 23 39 38 23 27 23"
+                        />
+                        </svg>
+                    </div>
+                    </div>
+                    <div>
+                    <h6 className="mb-3 text-xl font-bold leading-5">
+                        Household Decor
+                    </h6>
+                    <p className="text-sm text-gray-900">
+                        Unique decor pieces ready to find a home with an organization that needs them.
+                    </p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        {/* Tstimonial Section */}
+        <section id="testimonials">
+            <div class="min-w-screen min-h-screen flex items-center justify-center">
+                <div class="w-full bg-white px-5 text-gray-800">
+                    <div class="w-full max-w-6xl mx-auto">
+                        <div class="text-center max-w-xl mx-auto">
+                        <h1 className="text-6xl md:text-7xl font-bold mb-5 text-gray-600">What people <br />are saying.</h1>
+                            <h3 class="text-xl mb-5 font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
+                            <div class="text-center mb-10">
+                                <span class="inline-block w-1 h-1 rounded-full bg-green-500 ml-1"></span>
+                                <span class="inline-block w-3 h-1 rounded-full bg-green-500 ml-1"></span>
+                                <span class="inline-block w-40 h-1 rounded-full bg-green-500"></span>
+                                <span class="inline-block w-3 h-1 rounded-full bg-green-500 ml-1"></span>
+                                <span class="inline-block w-1 h-1 rounded-full bg-green-500 ml-1"></span>
+                            </div>
+                        </div>
+                        <div class="-mx-3 md:flex items-start">
+                            <div class="px-3 md:w-1/3">
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                                    <div class="w-full flex mb-4 items-center">
+                                        <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                                            <img src="https://i.pravatar.cc/100?img=1" alt=""/>
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-bold text-sm uppercase text-gray-600">Kenzie Edgar.</h6>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos sunt ratione dolor exercitationem minima quas itaque saepe quasi architecto vel! Accusantium, vero sint recusandae cum tempora nemo commodi soluta deleniti.<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                                    </div>
+                                </div>
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                                    <div class="w-full flex mb-4 items-center">
+                                        <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                                            <img src="https://i.pravatar.cc/100?img=2" alt=""/>
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-bold text-sm uppercase text-gray-600">Stevie Tifft.</h6>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Lorem ipsum, dolor sit amet, consectetur adipisicing elit. Dolore quod necessitatibus, labore sapiente, est, dignissimos ullam error ipsam sint quam tempora vel.<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-3 md:w-1/3">
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                                    <div class="w-full flex mb-4 items-center">
+                                        <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                                            <img src="https://i.pravatar.cc/100?img=3" alt=""/>
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-bold text-sm uppercase text-gray-600">Tommie Ewart.</h6>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, obcaecati ullam excepturi dicta error deleniti sequi.<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                                    </div>
+                                </div>
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                                    <div class="w-full flex mb-4 items-center">
+                                        <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                                            <img src="https://i.pravatar.cc/100?img=4" alt=""/>
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-bold text-sm uppercase text-gray-600">Charlie Howse.</h6>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto inventore voluptatum nostrum atque, corrupti, vitae esse id accusamus dignissimos neque reprehenderit natus, hic sequi itaque dicta nisi voluptatem! Culpa, iusto.<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-3 md:w-1/3">
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                                    <div class="w-full flex mb-4 items-center">
+                                        <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                                            <img src="https://i.pravatar.cc/100?img=5" alt=""/>
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-bold text-sm uppercase text-gray-600">Nevada Herbertson.</h6>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, voluptatem porro obcaecati dicta, quibusdam sunt ipsum, laboriosam nostrum facere exercitationem pariatur deserunt tempora molestiae assumenda nesciunt alias eius? Illo, autem!<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                                    </div>
+                                </div>
+                                <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                                    <div class="w-full flex mb-4 items-center">
+                                        <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+
+                                            <img src="https://i.pravatar.cc/100?img=6" alt=""/>
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-bold text-sm uppercase text-gray-600">Kris Stanton.</h6>
+                                        </div>
+                                    </div>
+                                    <div class="w-full">
+                                        <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem iusto, explicabo, cupiditate quas totam!<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         {/* Contact Section */}
-        <section className="py-16 bg-gray-100">
-            <div className="grid sm:grid-cols-2 items-center gap-16 p-8 mx-auto max-w-4xl bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md text-[#333] font-[sans-serif]">
-                <div>
-                <h1 className="text-3xl font-extrabold">Let's Talk</h1>
-                <p className="text-sm text-gray-400 mt-3">
-                    Have some big idea or brand to develop and need help? Then reach out we'd love to hear about your project and provide help.
-                </p>
-                <div className="mt-12">
-                    <h2 className="text-lg font-extrabold">Email</h2>
-                    <ul className="mt-3">
-                    <li className="flex items-center">
-                        <div className="bg-[#e6e6e6cf] h-10 w-10 rounded-full flex items-center justify-center shrink-0">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20px"
-                            height="20px"
-                            fill="#007bff"
-                            viewBox="0 0 479.058 479.058"
-                        >
-                            <path
-                            d="M434.146 59.882H44.912C20.146 59.882 0 80.028 0 104.794v269.47c0 24.766 20.146 44.912 44.912 44.912h389.234c24.766 0 44.912-20.146 44.912-44.912v-269.47c0-24.766-20.146-44.912-44.912-44.912zm0 29.941c2.034 0 3.969.422 5.738 1.159L239.529 264.631 39.173 90.982a14.902 14.902 0 0 1 5.738-1.159zm0 299.411H44.912c-8.26 0-14.971-6.71-14.971-14.971V122.615l199.778 173.141c2.822 2.441 6.316 3.655 9.81 3.655s6.988-1.213 9.81-3.655l199.778-173.141v251.649c-.001 8.26-6.711 14.97-14.971 14.97z"
-                            data-original="#000000"
-                            />
-                        </svg>
+        <section id="contact" className="py-16 ">
+            <div className="flex justify-center items-center w-full">
+                {/* Form Container */}
+                <div className="container mx-auto my-4 px-4 lg:px-20">
+                <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl bg-white">
+                    <div className="flex">
+                    <h1 className="font-bold uppercase text-5xl">Send us a <br /> message</h1>
+                    </div>
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+                    <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                        type="text" placeholder="First Name*" />
+                    <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                        type="text" placeholder="Last Name*" />
+                    <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                        type="email" placeholder="Email*" />
+                    <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                        type="number" placeholder="Phone*" />
+                    </div>
+                    <div className="my-4">
+                    <textarea placeholder="Message*" className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div className="my-2 w-1/2 lg:w-1/4">
+                    <button className="uppercase text-sm font-bold tracking-wide bg-green-500 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
+                        Send Message
+                    </button>
+                    </div>
+                </div>
+
+                {/* Contact Info Section */}
+                <div className="w-full lg:-mt-96 lg:w-2/6 px-8 py-12 ml-auto bg-green-500 rounded-2xl">
+                    <div className="flex flex-col text-white">
+                    <h1 className="font-bold uppercase text-4xl my-4">Drop in our office</h1>
+                    <p className="text-white">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt arcu diam,
+                        eu feugiat felis fermentum id. Curabitur vitae nibh viverra, auctor turpis sed, scelerisque ex.
+                    </p>
+
+                    <div className="flex my-4 w-2/3 lg:w-1/2">
+                        <div className="flex flex-col">
+                        <i className="fas fa-map-marker-alt pt-2 pr-2" />
                         </div>
-                        <a
-                        target="blank"
-                        href="mailto:your-email@example.com"
-                        className="text-[#007bff] text-sm ml-3"
-                        >
-                        <small className="block">Mail</small>
-                        <strong>your-email@example.com</strong>
+                        <div className="flex flex-col">
+                        <h2 className="text-2xl">Main Office</h2>
+                        <p className="text-white">5555 Tailwind RD, Pleasant Grove, UT 73533</p>
+                        </div>
+                    </div>
+
+                    <div className="flex my-4 w-2/3 lg:w-1/2">
+                        <div className="flex flex-col">
+                        <i className="fas fa-phone-alt pt-2 pr-2" />
+                        </div>
+                        <div className="flex flex-col">
+                        <h2 className="text-2xl">Call Us</h2>
+                        <p className="text-white">Tel: xxx-xxx-xxx</p>
+                        <p className="text-white">Fax: xxx-xxx-xxx</p>
+                        </div>
+                    </div>
+
+                    <div className="flex my-4 w-2/3 lg:w-1/2">
+                        <a href="https://www.facebook.com/ENLIGHTENEERING/" target="_blank" rel="noreferrer" className="rounded-full bg-white h-8 w-8 inline-block mx-1 text-center pt-1">
+                        <i className="fab fa-facebook-f text-blue-900" />
                         </a>
-                    </li>
-                    </ul>
-                </div>
-                <div className="mt-12">
-                    <h2 className="text-lg font-extrabold">Socials</h2>
-                    <ul className="flex mt-3 space-x-4">
-                    <li className="bg-[#e6e6e6cf] h-10 w-10 rounded-full flex items-center justify-center shrink-0">
-                        <a href="javascript:void(0)">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20px"
-                            height="20px"
-                            fill="#007bff"
-                            viewBox="0 0 24 24"
-                        >
-                            <path d="M6.812 13.937H9.33v9.312c0 .414.335.75.75.75l4.007.001a.75.75 0 0 0 .75-.75v-9.312h2.387a.75.75 0 0 0 .744-.657l.498-4a.75.75 0 0 0-.744-.843h-2.885c.113-2.471-.435-3.202 1.172-3.202 1.088-.13 2.804.421 2.804-.75V.909a.75.75 0 0 0-.648-.743A26.926 26.926 0 0 0 15.071 0c-7.01 0-5.567 7.772-5.74 8.437H6.812a.75.75 0 0 0-.75.75v4c0 .414.336.75.75.75zm.75-3.999h2.518a.75.75 0 0 0 .75-.75V6.037c0-2.883 1.545-4.536 4.24-4.536.878 0 1.686.043 2.242.087v2.149c-.402.205-3.976-.884-3.976 2.697v2.755c0 .414.336.75.75.75h2.786l-.312 2.5h-2.474a.75.75 0 0 0-.75.75V22.5h-2.505v-9.312a.75.75 0 0 0-.75-.75H7.562z" />
-                        </svg>
+                        <a href="https://www.linkedin.com/company/enlighteneering-inc-" target="_blank" rel="noreferrer" className="rounded-full bg-white h-8 w-8 inline-block mx-1 text-center pt-1">
+                        <i className="fab fa-linkedin-in text-blue-900" />
                         </a>
-                    </li>
-                    {/* Add more social icons here */}
-                    </ul>
+                    </div>
+                    </div>
                 </div>
                 </div>
-                <form className="ml-auto space-y-4">
-                <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
-                />
-                <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
-                />
-                <input
-                    type="text"
-                    placeholder="Subject"
-                    className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
-                />
-                <textarea
-                    placeholder="Message"
-                    rows="6"
-                    className="w-full rounded-md px-4 border text-sm pt-2.5 outline-[#007bff]"
-                ></textarea>
-                <button
-                    type="button"
-                    className="text-white bg-[#007bff] hover:bg-blue-600 font-semibold rounded-md text-sm px-4 py-2.5 w-full"
-                >
-                    Send
-                </button>
-                </form>
             </div>
-        </section>
+            </section>
+
       </main>
 
       {/* Footer */}
       <footer className="bg-gray-800 py-4">
         <div className="container mx-auto px-6 text-center text-white">
-          <p>&copy; 2024 Renieuw. All rights reserved.</p>
+          <p>&copy; 2025 Renieuw. All rights reserved.</p>
         </div>
       </footer>
     </div>
