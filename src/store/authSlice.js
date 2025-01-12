@@ -3,13 +3,12 @@ import apiClient from "../services/apiClient";
 import { jwtDecode } from "jwt-decode";
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: Boolean(localStorage.getItem("accessToken")),
   user: null,
   loading: false,
   error: null,
 };
 
-// Thunk for login
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
@@ -37,7 +36,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) throw new Error("No access token found");
+      if (!accessToken) return null;
 
       // Decode user information from accessToken
       const decodedToken = jwtDecode(accessToken);
@@ -45,6 +44,24 @@ export const fetchCurrentUser = createAsyncThunk(
       return { user: decodedToken };
     } catch (error) {
       return rejectWithValue("Failed to fetch user data");
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      // Call the server logout endpoint
+      await apiClient.post("/api/v1/auth/logout");
+
+      // Remove tokens from local storage
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+
+      return true; // Logout successful
+    } catch (error) {
+      return rejectWithValue("Logout failed");
     }
   }
 );
@@ -57,15 +74,10 @@ const authSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
-    logoutUser: (state) => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      state.user = null;
-      state.isAuthenticated = false;
-    },
   },
   extraReducers: (builder) => {
     builder
+      // handle login
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -79,12 +91,25 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Login failed.";
       })
+      // handle fetchCurrentUser
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+      })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.error = action.payload;
+      })
+      // handle logout
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.error = action.payload || "Logout failed.";
       });
   },
 });
 
 // Export actions and reducer
-export const { setError, logoutUser } = authSlice.actions;
+export const { setError } = authSlice.actions;
 export default authSlice.reducer;

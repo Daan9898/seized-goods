@@ -67,7 +67,7 @@ const Login = ({ onSwitch, onForgot }) => {
         </button>
       </div>
       <div className="mt-4 text-sm flex">
-        <p className="mr-1">Don't have an account?</p>
+        <p className="mr-1 dark:text-gray-500">Don't have an account?</p>
         <button onClick={onSwitch} className="text-blue-500 hover:underline">
           Register
         </button>

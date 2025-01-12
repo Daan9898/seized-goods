@@ -1,7 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout, setError } from "../store/authSlice";
 const Navbar = ({ user }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        dispatch(setError(error));
+      });
+  };
   return (
     <nav className="font-sans flex flex-col text-center content-center sm:flex-row sm:text-left sm:justify-between py-2 px-6 bg-white shadow sm:items-baseline w-full">
       {/* Logo Section */}
@@ -48,6 +62,14 @@ const Navbar = ({ user }) => {
             alt="User Avatar"
             className="h-10 w-10 rounded-full ml-4"
           />
+        )}
+        {user && (
+          <button
+            onClick={handleLogout}
+            className="bg-slate-900 text-gray-400 p-2 rounded-md m-4"
+          >
+            Logout
+          </button>
         )}
       </div>
     </nav>
