@@ -36,7 +36,7 @@ export const fetchCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) return null;
+      if (!accessToken) throw new Error("Token not found");
 
       // Decode user information from accessToken
       const decodedToken = jwtDecode(accessToken);
@@ -61,7 +61,9 @@ export const logout = createAsyncThunk(
 
       return true; // Logout successful
     } catch (error) {
-      return rejectWithValue("Logout failed");
+      return rejectWithValue(
+        error.response?.data?.message || "An unexpected login error occurred."
+      );
     }
   }
 );
@@ -71,45 +73,49 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setError: (state, action) => {
+    setError(state, action) {
       state.error = action.payload;
     },
+    resetLoading(state) {
+      state.loading = false;
+    },
+    // other reducers (like logout if necessary)
   },
   extraReducers: (builder) => {
-    builder
-      // handle login
-      .addCase(login.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.user;
-        state.isAuthenticated = true;
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Login failed.";
-      })
-      // handle fetchCurrentUser
-      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.isAuthenticated = true;
-      })
-      .addCase(fetchCurrentUser.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      // handle logout
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.isAuthenticated = false;
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.error = action.payload || "Logout failed.";
-      });
+    // Handle loading states for login
+    builder.addCase(login.pending, (state) => {
+      state.loading = true; // Set loading to true when login is in progress
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.loading = false; // Set loading to false once login is successful
+      state.user = action.payload.user;
+      state.isAuthenticated = true;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.loading = false; // Set loading to false if login fails
+      state.error = action.payload;
+    });
+
+    // Handle loading states for fetchCurrentUser
+    builder.addCase(fetchCurrentUser.pending, (state) => {
+      state.userLoading = true;
+    });
+    builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.user;
+    });
+    builder.addCase(fetchCurrentUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(logout.fulfilled, (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = null;
+    });
   },
 });
 
 // Export actions and reducer
-export const { setError } = authSlice.actions;
+export const { setError, resetLoading } = authSlice.actions;
 export default authSlice.reducer;

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, setError } from "../store/authSlice";
+
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Navbar = ({ user }) => {
     dispatch(logout())
       .unwrap()
       .then(() => {
-        navigate("/");
+        navigate("/login");
       })
       .catch((error) => {
         dispatch(setError(error));
@@ -63,13 +64,20 @@ const Navbar = ({ user }) => {
             className="h-10 w-10 rounded-full ml-4"
           />
         )}
-        {user && (
+        {user ? (
           <button
             onClick={handleLogout}
             className="bg-slate-900 text-gray-400 p-2 rounded-md m-4"
           >
             Logout
           </button>
+        ) : (
+          <Link
+            to="/Login"
+            className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
+          >
+            Login
+          </Link>
         )}
       </div>
     </nav>

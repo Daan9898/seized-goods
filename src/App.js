@@ -20,11 +20,13 @@ import { fetchCurrentUser } from "./store/authSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user, loading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(fetchCurrentUser());
-  }, [dispatch]);
+    if (user && user.accessToken) {
+      dispatch(fetchCurrentUser());
+    }
+  }, [user, dispatch]);
 
   const [userRequests, setUserRequests] = useState([
     {

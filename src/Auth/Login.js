@@ -1,28 +1,22 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { login, setError } from "../store/authSlice";
+import { useSelector } from "react-redux";
 
-const Login = ({ onSwitch, onForgot }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+const Login = ({ onLogin, onSwitch, onForgot }) => {
   const { loading, error } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(setError(null));
-
-    try {
-      await dispatch(login({ email, password })).unwrap();
-      navigate("/browse-items");
-    } catch (err) {
-      console.error("Login failed:", err);
+     // Validate form fields before proceeding
+    if (!email || !password) {
+      alert("Please enter both email and password");
+      return;
     }
+
+    onLogin(email, password);
   };
 
   return (
@@ -77,3 +71,4 @@ const Login = ({ onSwitch, onForgot }) => {
 };
 
 export default Login;
+

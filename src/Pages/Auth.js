@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
 import apiClient from "../services/apiClient";
+import { login } from "../store/authSlice";
 
-const Auth = ({ onLogin }) => {
-  const [view, setView] = useState("login"); // "login", "register", or "forgot"
+const Auth = () => {
+  const [view, setView] = useState("login");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleLogin = (email, password) => {
-    onLogin(email, password);
-    navigate("/browse-items");
+  useEffect(() => {
+    // Reset loading state when switching views
+    dispatch({ type: "auth/resetLoading" });
+  }, [dispatch]);
+
+  const handleLogin = async (email, password) => {
+    try {
+      await dispatch(login({ email, password })).unwrap();
+      navigate("/browse-items");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   const handleRegister = async (accountData) => {
     try {
+      // Perform registration logic
       const response = await apiClient.post(
         "/api/v1/organizations/register",
         accountData

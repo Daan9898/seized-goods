@@ -14,6 +14,13 @@ export const store = configureStore({
   reducer: {
     auth: persistedReducer,
   },
+  // Ignore the serializability check for persist actions
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST"], // Ignore this action type
+      },
+    }),
 });
 
 export const persistor = persistStore(store);
