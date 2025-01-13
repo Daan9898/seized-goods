@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import apiClient from "../services/apiClient";
 
 const RequestSubmission = () => {
   const navigate = useNavigate();
@@ -7,9 +8,10 @@ const RequestSubmission = () => {
   const product = location.state?.product;
 
   const [formData, setFormData] = useState({
-    intendedUse: "",
-    socialImpact: "",
-    urgency: "Medium",
+    seizedGoodId: product.id, 
+    purpose: "",
+    quantity: 1,
+    impactEstimate: "",   
   });
 
   const handleInputChange = (e) => {
@@ -17,9 +19,28 @@ const RequestSubmission = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Submitted Request:", formData);
+    
+     try {
+      // Make the POST request using apiClient
+      const response = await apiClient.post("api/v1/requests", formData);
+       
+      console.log("Response data on Request:", response.data);
+      // Redirect to a confirmation page or My Requests page with the response data
+      navigate("/confirmation", {
+        state: {
+          product,
+          requestDetails: formData,
+          serverResponse: response.data, // Include the server response
+        },
+      });
+    } catch (error) {
+      // Handle errors, show error message to the user
+      console.error("Error making request:", error);
+      alert("Failed to submit request. Please try again.");
+    }
 
     // Redirect to a confirmation page or My Requests page
     navigate("/confirmation", {
@@ -62,52 +83,52 @@ const RequestSubmission = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="intendedUse" className="block text-gray-700 font-medium">
-              Intended Use
+            <label htmlFor="purpose" className="block text-gray-700 font-medium">
+              Purpose to use these items
             </label>
             <textarea
-              id="intendedUse"
-              name="intendedUse"
+              id="purpose"
+              name="purpose"
               rows="3"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               placeholder="Describe how you intend to use this item..."
-              value={formData.intendedUse}
+              value={formData.purpose}
               onChange={handleInputChange}
               required
             ></textarea>
           </div>
 
           <div>
-            <label htmlFor="socialImpact" className="block text-gray-700 font-medium">
+            <label htmlFor="impactEstimate" className="block text-gray-700 font-medium">
               Expected Social Impact
             </label>
             <textarea
-              id="socialImpact"
-              name="socialImpact"
+              id="impactEstimate"
+              name="impactEstimate"
               rows="3"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               placeholder="Describe the social impact of this request..."
-              value={formData.socialImpact}
+              value={formData.impactEstimate}
               onChange={handleInputChange}
               required
             ></textarea>
-          </div>
 
-          <div>
-            <label htmlFor="urgency" className="block text-gray-700 font-medium">
-              Urgency Level
-            </label>
-            <select
-              id="urgency"
-              name="urgency"
-              className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
-              value={formData.urgency}
-              onChange={handleInputChange}
-            >
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
+             <div>
+          <label htmlFor="quantity" className="block text-gray-700 font-medium">
+            Quantity
+          </label>
+            <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            min="1"
+            className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
+            placeholder="Enter the number of items you need"
+            value={formData.quantity}
+            onChange={handleInputChange}
+            required
+        />
+  </div>
           </div>
 
           <button
