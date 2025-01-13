@@ -9,9 +9,10 @@ const MyRequests = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await apiClient.get("/api/v1/requests/my-requests"); // Fetch user-specific requests
-        setRequests(response.data); // Update state with the fetched requests
+        const response = await apiClient.get("/api/v1/requests/me");
+        setRequests(response.data);
       } catch (err) {
+        console.log("error fetchin requests:", err);
         setError(err.response?.data?.message || "Failed to load requests");
       } finally {
         setLoading(false);
@@ -63,4 +64,3 @@ const MyRequests = () => {
 };
 
 export default MyRequests;
-
