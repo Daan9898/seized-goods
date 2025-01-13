@@ -56,8 +56,9 @@ const RequestSubmission = () => {
         },
       });
     } catch (error) {
-      const errorMsg = error.response?.data?.error || "Failed to submit request.";
-      console.error("Error:", errorMsg);
+      const errorMessage = error.response?.data?.message || "Failed to submit request.";
+      setError(errorMessage);
+      console.error("Error details:", error.response?.data);
     }
   };
 
