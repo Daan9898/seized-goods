@@ -1,29 +1,22 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import apiClient from "../services/apiClient";
+import { useSelector } from "react-redux";
 
-const Login = ({ onSwitch, onForgot }) => {
-  const navigate = useNavigate();
+const Login = ({ onLogin, onSwitch, onForgot }) => {
+  const { loading, error } = useSelector((state) => state.auth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null);
 
-    try {
-      await apiClient.post(
-        "/api/v1/auth/login",
-        { email, password },
-        { withCredentials: true }
-      );
-      navigate("/browse-items");
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Login failed. Please try again."
-      );
+     // Validate form fields before proceeding
+    if (!email || !password) {
+      alert("Please enter both email and password");
+      return;
     }
+
+    onLogin(email, password);
   };
 
   return (
@@ -55,9 +48,12 @@ const Login = ({ onSwitch, onForgot }) => {
       </div>
       <button
         type="submit"
-        className="w-full px-6 py-3 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
+        disabled={loading}
+        className={`w-full px-6 py-3 text-sm text-white ${
+          loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+        } rounded-md focus:outline-none`}
       >
-        Login
+        {loading ? "Logging in..." : "Login"}
       </button>
       <div className="mt-4 text-sm">
         <button onClick={onForgot} className="text-blue-500 hover:underline">
@@ -65,7 +61,7 @@ const Login = ({ onSwitch, onForgot }) => {
         </button>
       </div>
       <div className="mt-4 text-sm flex">
-        <p className="mr-1">Don't have an account?</p>
+        <p className="mr-1 dark:text-gray-500">Don't have an account?</p>
         <button onClick={onSwitch} className="text-blue-500 hover:underline">
           Register
         </button>
@@ -75,3 +71,4 @@ const Login = ({ onSwitch, onForgot }) => {
 };
 
 export default Login;
+
