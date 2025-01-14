@@ -15,6 +15,7 @@ import mockProducts from "./data/mockProducts.json";
 import RequestSubmission from "./Pages/RequestSubmission";
 import MyRequests from "./Pages/MyRequests";
 import Confirmation from "./Pages/Confirmation";
+import AdminDashboard from "./Pages/AdminDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/authSlice";
 
@@ -78,6 +79,7 @@ const App = () => {
               user ? <Navigate to="/browse-items" replace /> : <LandingPage />
             }
           />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/browse-items" element={<BrowseItems />} />
           <Route
