@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import apiClient from "../services/apiClient";
 
 const RequestSubmission = () => {
   const navigate = useNavigate();
@@ -7,27 +8,58 @@ const RequestSubmission = () => {
   const product = location.state?.product;
 
   const [formData, setFormData] = useState({
-    intendedUse: "",
-    socialImpact: "",
-    urgency: "Medium",
+    seizedGoodId: product?.id || "", 
+    purpose: "",
+    quantity: 1,
+    impactEstimate: "",
   });
+
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const numericValue = name === "quantity" ? parseInt(value, 10) : value;
+
+    if (name === "quantity" && product?.availableQuantity != null) {
+      // Validate quantity against availableQuantity
+      if (numericValue > product.availableQuantity) {
+        setError(`Requested quantity exceeds available stock (${product.availableQuantity}).`);
+      } else {
+        setError("");
+      }
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: numericValue }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Request:", formData);
 
-    // Redirect to a confirmation page or My Requests page
-    navigate("/confirmation", {
-      state: {
-        product,
-        requestDetails: formData,
-      },
-    });
+    if (product?.availableQuantity == null) {
+      setError("Product stock information is unavailable. Please try again later.");
+      return;
+    }
+
+    if (formData.quantity > product.availableQuantity) {
+      setError(`Requested quantity exceeds available stock (${product.availableQuantity}).`);
+      return;
+    }
+
+    try {
+      const response = await apiClient.post("/api/v1/requests", formData);
+
+      navigate("/confirmation", {
+        state: {
+          product,
+          requestDetails: formData,
+          serverResponse: response.data,
+        },
+      });
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Failed to submit request.";
+      setError(errorMessage);
+      console.error("Error details:", error.response?.data);
+    }
   };
 
   if (!product) {
@@ -36,6 +68,17 @@ const RequestSubmission = () => {
         <h1 className="text-2xl font-bold text-red-500">
           No product selected for the request.
         </h1>
+      </div>
+    );
+  }
+
+  if (product?.availableQuantity == null) {
+    return (
+      <div className="text-center py-10">
+        <h1 className="text-2xl font-bold text-yellow-500">
+          Product stock information is unavailable.
+        </h1>
+        <p className="text-gray-500">Please try again later.</p>
       </div>
     );
   }
@@ -57,62 +100,72 @@ const RequestSubmission = () => {
             <p className="text-sm text-gray-500 mt-1">
               <span className="font-semibold">Value:</span> {product.value}
             </p>
+            <p className="text-sm text-gray-500 mt-1">
+              <span className="font-semibold">Available Stock:</span> {product.availableQuantity}
+            </p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="intendedUse" className="block text-gray-700 font-medium">
-              Intended Use
+            <label htmlFor="purpose" className="block text-gray-700 font-medium">
+              Purpose to use these items
             </label>
             <textarea
-              id="intendedUse"
-              name="intendedUse"
+              id="purpose"
+              name="purpose"
               rows="3"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               placeholder="Describe how you intend to use this item..."
-              value={formData.intendedUse}
+              value={formData.purpose}
               onChange={handleInputChange}
               required
             ></textarea>
           </div>
 
           <div>
-            <label htmlFor="socialImpact" className="block text-gray-700 font-medium">
+            <label htmlFor="impactEstimate" className="block text-gray-700 font-medium">
               Expected Social Impact
             </label>
             <textarea
-              id="socialImpact"
-              name="socialImpact"
+              id="impactEstimate"
+              name="impactEstimate"
               rows="3"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               placeholder="Describe the social impact of this request..."
-              value={formData.socialImpact}
+              value={formData.impactEstimate}
               onChange={handleInputChange}
               required
             ></textarea>
           </div>
 
           <div>
-            <label htmlFor="urgency" className="block text-gray-700 font-medium">
-              Urgency Level
+            <label htmlFor="quantity" className="block text-gray-700 font-medium">
+              Quantity
             </label>
-            <select
-              id="urgency"
-              name="urgency"
-              className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
-              value={formData.urgency}
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              max={product.availableQuantity} // Add max to restrict input
+              className={`mt-1 block w-full rounded-lg border ${
+                error ? "border-red-500" : "border-gray-300"
+              } p-2`}
+              placeholder="Enter the number of items you need"
+              value={formData.quantity}
               onChange={handleInputChange}
-            >
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
+              required
+            />
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600"
+            className={`w-full py-2 px-4 ${
+              error ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"
+            } text-white font-bold rounded-lg`}
+            disabled={!!error} // Disable button if there's an error
           >
             Submit Request
           </button>
@@ -123,3 +176,4 @@ const RequestSubmission = () => {
 };
 
 export default RequestSubmission;
+
