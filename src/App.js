@@ -18,6 +18,7 @@ import Confirmation from "./Pages/Confirmation";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/authSlice";
+import ManageProducts from "./Pages/AdminDashboard/ManageProducts";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const App = () => {
             }
           />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/products-management" element={<ManageProducts />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/browse-items" element={<BrowseItems />} />
           <Route
