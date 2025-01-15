@@ -26,7 +26,9 @@ const MyRequests = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">My Requests</h1>
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">
+        Your requested items:
+      </h1>
       {requests && requests.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {requests.map((request) => (

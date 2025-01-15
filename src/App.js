@@ -9,7 +9,6 @@ import {
 import LandingPage from "./Pages/LandingPage";
 import Auth from "./Pages/Auth";
 import BrowseItems from "./Pages/BrowseItems";
-import Navbar from "./Components/Navbar";
 import ProductDetails from "./Components/ProductDetails";
 import mockProducts from "./data/mockProducts.json";
 import RequestSubmission from "./Pages/RequestSubmission";
@@ -19,6 +18,7 @@ import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/authSlice";
 import ManageProducts from "./Pages/AdminDashboard/ManageProducts";
+import Sidebar from "./Components/Sidebar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,14 +34,17 @@ const App = () => {
   const Layout = ({ children }) => {
     const location = useLocation();
 
-    // Hide navbar on these pages
-    const hideNavbarPaths = ["/", "/login"];
-    const hideNavbar = hideNavbarPaths.includes(location.pathname);
+    // Hide navbar and sidebar on these pages
+    const hidePaths = ["/", "/login", "/Login"];
+    const hideSidebar = hidePaths.includes(location.pathname);
 
     return (
-      <div className="min-h-screen">
-        {!hideNavbar && <Navbar user={user} />}
-        {children}
+      <div className="min-h-screen flex">
+        {!hideSidebar && <Sidebar user={user} />}{" "}
+        {/* Sidebar is conditionally rendered */}
+        <div className="flex-1">
+          <main>{children}</main>
+        </div>
       </div>
     );
   };
