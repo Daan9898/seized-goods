@@ -7,28 +7,27 @@ const MyRequests = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const response = await apiClient.get("/api/v1/requests/me");
-        setRequests(response.data);
-      } catch (err) {
-        console.log("error fetchin requests:", err);
-        setError(err.response?.data?.message || "Failed to load requests");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchRequests();
   }, []);
 
+  const fetchRequests = async () => {
+    try {
+      const response = await apiClient.get("/api/v1/requests/me");
+      setRequests(response.data);
+    } catch (err) {
+      console.log("error fetching requests:", err);
+      setError(err.response?.data?.message || "Failed to load requests");
+    } finally {
+      setLoading(false);
+    }
+  };
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">My Requests</h1>
-      {requests.length > 0 ? (
+      {requests && requests.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {requests.map((request) => (
             <div
