@@ -9,6 +9,7 @@ import {
   FaClipboardList,
 } from "react-icons/fa";
 import { MdOutlineInventory } from "react-icons/md";
+import UserRequests from "./UsersRequests";
 
 const AdminDashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -22,7 +23,7 @@ const AdminDashboard = () => {
       case "deleteItem":
         return <div>Delete Item Confirmation Placeholder</div>;
       case "viewRequests":
-        return <div>View Requests Placeholder</div>;
+        return <UserRequests />;
       case "viewUsers":
         return <div>View Users Placeholder</div>;
       default:

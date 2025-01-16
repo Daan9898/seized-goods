@@ -19,6 +19,7 @@ const Register = ({ onRegister, onSwitch }) => {
   const [country, setCountry] = useState("Netherlands");
   const [zipCode, setZipCode] = useState("");
   const [qualifications, setQualifications] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
 
   // Fetch all categories on component mount

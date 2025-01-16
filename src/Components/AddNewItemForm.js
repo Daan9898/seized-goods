@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient";
@@ -100,8 +99,8 @@ function AddNewItemForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-lg w-full bg-white shadow-lg rounded-lg p-6 border">
+    <div className="w-full min-h-screen bg-gray-50 flex items-center p-4">
+      <div className="max-w-xlg w-full bg-white shadow-lg rounded-lg p-6 border">
         <h2 className="text-2xl font-bold text-gray-700 text-center mb-6">
           Create a New Good
         </h2>

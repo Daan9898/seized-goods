@@ -7,6 +7,7 @@ const BrowseItems = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const BrowseItems = () => {
   }, [category, search]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen px-4">
       <header className="py-6 flex justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Browse Items</h1>

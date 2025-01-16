@@ -109,7 +109,7 @@ const LandingPage = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  href="/learn-more"
                   className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg bg-gray-100 rounded-2xl sm:w-auto sm:mb-0"
                 >
                   Learn More
@@ -128,25 +128,6 @@ const LandingPage = () => {
                     />
                   </svg>
                 </a>
-              </div>
-            </div>
-
-            <div className="w-full mx-auto mt-20 text-center md:w-10/12">
-              <div className="relative z-0 w-full mt-8">
-                <div className="relative overflow-hidden shadow-2xl">
-                  <div className="flex items-center flex-none px-4 bg-green-400 rounded-b-none h-11 rounded-xl">
-                    <div className="flex space-x-1.5">
-                      <div className="w-3 h-3 border-2 border-white rounded-full"></div>
-                      <div className="w-3 h-3 border-2 border-white rounded-full"></div>
-                      <div className="w-3 h-3 border-2 border-white rounded-full"></div>
-                    </div>
-                  </div>
-                  <img
-                    src="https://cdn.devdojo.com/images/march2021/green-dashboard.jpg"
-                    alt="Dashboard Preview"
-                    className="w-full"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -189,9 +170,11 @@ const LandingPage = () => {
                   <div className="w-full md:w-6/12 px-4">
                     <div className="relative flex flex-col mt-4">
                       <div className="px-4 py-5 flex-auto">
-                        <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
-                          <i className="fas fa-box"></i>
-                        </div>
+                        <img
+                          src="/assets/images/searchItemIcon.png"
+                          className="w-20"
+                          alt=""
+                        />
                         <h6 className="text-xl mb-1 font-semibold">
                           Browse Goods
                         </h6>
