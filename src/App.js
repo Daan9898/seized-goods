@@ -6,6 +6,7 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import LandingPage from "./Pages/LandingPage";
 import Auth from "./Pages/Auth";
 import BrowseItems from "./Pages/BrowseItems";
@@ -17,12 +18,13 @@ import Confirmation from "./Pages/Confirmation";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/authSlice";
-import ManageProducts from "./Pages/AdminDashboard/ManageProducts";
 import Sidebar from "./Components/Sidebar";
 
 const App = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+  console.log("user:", user);
 
   useEffect(() => {
     if (user && user.accessToken) {
@@ -53,23 +55,63 @@ const App = () => {
     <Router>
       <Layout>
         <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Auth />} />
+
+          {/* Protected Routes */}
           <Route
-            path="/"
+            path="/browse-items"
             element={
-              user ? <Navigate to="/browse-items" replace /> : <LandingPage />
+              <ProtectedRoute>
+                <BrowseItems />
+              </ProtectedRoute>
             }
           />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/products-management" element={<ManageProducts />} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/browse-items" element={<BrowseItems />} />
           <Route
             path="/product/:id"
-            element={<ProductDetails products={mockProducts} />}
+            element={
+              <ProtectedRoute>
+                <ProductDetails products={mockProducts} />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/request-submission" element={<RequestSubmission />} />
-          <Route path="/my-requests" user={user} element={<MyRequests />} />
-          <Route path="/confirmation" element={<Confirmation />} />
+          <Route
+            path="/request-submission"
+            element={
+              <ProtectedRoute>
+                <RequestSubmission />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-requests"
+            element={
+              <ProtectedRoute>
+                <MyRequests />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/confirmation"
+            element={
+              <ProtectedRoute>
+                <Confirmation />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Route */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all for undefined routes */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>

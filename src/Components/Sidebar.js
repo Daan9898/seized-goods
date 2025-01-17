@@ -8,7 +8,6 @@ import { IoHomeOutline } from "react-icons/io5";
 import { FaProductHunt } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { TbReportSearch } from "react-icons/tb";
-import { IoLogoBuffer } from "react-icons/io";
 import { MdOutlineDashboard } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 
@@ -27,17 +26,14 @@ const menuItems = [
     icons: <MdOutlineDashboard size={30} />,
     label: "Dashboard",
     toPage: "/admin",
-    adminOnly: true, // Only visible to admin users
+    adminOnly: true,
   },
-  {
-    icons: <IoLogoBuffer size={30} />,
-    label: "Log",
-    toPage: "/log",
-  },
+
   {
     icons: <TbReportSearch size={30} />,
     label: "Requests",
     toPage: "/my-requests",
+    usersOnly: true,
   },
 ];
 
@@ -77,7 +73,11 @@ export default function Sidebar({ user }) {
       {/* Body */}
       <ul className="flex-1">
         {menuItems
-          .filter((item) => !item.adminOnly || (user && user.role === "ADMIN"))
+          .filter(
+            (item) =>
+              (!item.adminOnly || (user && user.role === "ADMIN")) &&
+              (!item.usersOnly || (user && user.role === "USER"))
+          )
           .map((item, index) => (
             <Link to={item.toPage} key={index}>
               <li className="px-3 py-2 my-2 hover:bg-blue-800 rounded-md duration-300 cursor-pointer flex gap-2 items-center relative group">

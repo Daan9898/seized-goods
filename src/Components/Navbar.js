@@ -64,15 +64,7 @@ const Navbar = ({ user }) => {
             className="h-10 w-10 rounded-full ml-4"
           />
         )}
-        {/* ADMIN DASHBOARD NAVIGATION */}
-        {user && user.role === "ADMIN" && (
-          <Link
-            to="/admin"
-            className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded"
-          >
-            Admin Dashboard
-          </Link>
-        )}
+
         {/* END ADMIN */}
         {user ? (
           <button

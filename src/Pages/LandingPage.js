@@ -1,7 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout, setError } from "../store/authSlice";
 
 const LandingPage = () => {
+  const user = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        dispatch(setError(error));
+      });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Sticky Navbar */}
@@ -56,18 +74,37 @@ const LandingPage = () => {
 
           {/* Login / Sign Up Section */}
           <div className="flex items-center space-x-4">
-            <Link
-              to="/Login"
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
-            >
-              Login
-            </Link>
-            <Link
-              to="/Register"
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-green-500 rounded-lg text-sm font-semibold"
-            >
-              Sign Up
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/browse-items"
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
+                >
+                  App
+                </Link>
+                <Link
+                  onClick={handleLogout}
+                  className="bg-slate-700 text-gray-400 px-4 py-2 rounded-md m-4"
+                >
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/Login"
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/Register"
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-green-500 rounded-lg text-sm font-semibold"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
