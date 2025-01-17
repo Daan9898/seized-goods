@@ -7,12 +7,17 @@ import {
   FaTrash,
   FaUsers,
   FaClipboardList,
+  FaEye,
 } from "react-icons/fa";
 import { MdOutlineInventory } from "react-icons/md";
 import UserRequests from "./UsersRequests";
+import ManageUsers from "./ManageUsers";
+import UserDetails from "./UserDetails";
+import AdminNotifications from "./AdminNotifications";
 
 const AdminDashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const renderContent = () => {
     switch (currentView) {
@@ -25,10 +30,20 @@ const AdminDashboard = () => {
       case "viewRequests":
         return <UserRequests />;
       case "viewUsers":
-        return <div>View Users Placeholder</div>;
+        return (
+          <ManageUsers
+            onViewDetails={(userId) => {
+              setSelectedUserId(userId);
+              setCurrentView("viewUserDetails");
+            }}
+          />
+        );
+      case "viewUserDetails":
+        return <UserDetails userId={selectedUserId} />;
       default:
         return (
           <div>
+            <AdminNotifications />
             <h1 className="text-2xl font-bold text-gray-800">
               Welcome to the Admin Dashboard
             </h1>

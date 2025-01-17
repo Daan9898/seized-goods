@@ -10,7 +10,6 @@ const UserRequests = () => {
     const fetchRequests = async () => {
       try {
         const response = await apiClient.get("/api/v1/requests");
-        console.log("response data request:", response.data);
         setRequests(response.data);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch requests");

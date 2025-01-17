@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
         <p className="mt-1 text-sm text-slate-500 line-clamp-2">
           {product.description}
         </p>
-        <div className="flex justify-between items-center mt-2">
+        <div className="flex justify-between items-center mt-2 gap-2">
           <span
             className={`px-2 py-1 text-sm font-medium rounded-lg ${getConditionStyle(
               product.condition
@@ -40,7 +40,7 @@ const ProductCard = ({ product }) => {
             {product.condition}
           </span>
           <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-lg">
-            Category: {product.category?.name || "Unknown"}
+            {product.category?.name || "Unknown"}
           </span>
         </div>
         <div className="mt-3 flex items-center justify-between">

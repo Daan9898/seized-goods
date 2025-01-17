@@ -19,18 +19,20 @@ import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/authSlice";
 import Sidebar from "./Components/Sidebar";
+import OrganizationsList from "./Pages/OrganizationsList";
+import OrganizationDetails from "./Pages/OrganizationDetails";
+import OrganizationEdit from "./Pages/AdminDashboard/OrganizationEdit";
 
 const App = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  console.log("user:", user);
-
   useEffect(() => {
-    if (user && user.accessToken) {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
       dispatch(fetchCurrentUser());
     }
-  }, [user, dispatch]);
+  }, [dispatch]);
 
   // Custom component to handle conditional rendering
   const Layout = ({ children }) => {
@@ -107,6 +109,33 @@ const App = () => {
             element={
               <ProtectedRoute role="ADMIN">
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organizations"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <OrganizationsList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organization/:id"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <OrganizationDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organization/:id/edit"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <OrganizationEdit />
               </ProtectedRoute>
             }
           />

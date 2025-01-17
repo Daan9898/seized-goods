@@ -10,12 +10,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { TbReportSearch } from "react-icons/tb";
 import { MdOutlineDashboard } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
+import { GrOrganization } from "react-icons/gr";
 
 const menuItems = [
   {
     icons: <IoHomeOutline size={30} />,
     label: "Home",
-    toPage: "/",
+    toPage: "/browse-items",
   },
   {
     icons: <FaProductHunt size={30} />,
@@ -28,7 +29,12 @@ const menuItems = [
     toPage: "/admin",
     adminOnly: true,
   },
-
+  {
+    icons: <GrOrganization size={30} />,
+    label: "Organizations",
+    toPage: "/organizations",
+    adminOnly: true,
+  },
   {
     icons: <TbReportSearch size={30} />,
     label: "Requests",
