@@ -58,10 +58,12 @@ const UserRequests = () => {
                 <span>
                   Requested by: {request.organization?.name || "Anonymous"}
                 </span>
-                <p className="text-gray-600 mt-2">
-                  Contact:{" "}
-                  {request.organization?.contactPerson || "Not available"}
-                </p>
+                <div className="justify-between">
+                  <p className="text-gray-600 mt-2">
+                    Contact:{" "}
+                    {request.organization?.contactPerson || "Not available"}
+                  </p>
+                </div>
               </div>
             </li>
           ))}

@@ -23,11 +23,16 @@ const ProductCard = ({ product }) => {
         <img
           src={product.images?.[0]?.url || "https://via.placeholder.com/300"}
           alt={product.name}
-          className="w-full h-64 object-cover"
+          className="w-full h-64 object-contain"
         />
       </div>
       <div className="mt-4 p-2">
-        <h2 className="text-slate-700 text-lg font-semibold">{product.name}</h2>
+        <h2 className="text-slate-700 text-lg font-semibold">
+          {" "}
+          {product.name.length > 20
+            ? product.name.slice(0, 17) + "..."
+            : product.name}
+        </h2>
         <p className="mt-1 text-sm text-slate-500 line-clamp-2">
           {product.description}
         </p>
@@ -43,13 +48,13 @@ const ProductCard = ({ product }) => {
             {product.category?.name || "Unknown"}
           </span>
         </div>
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-3 flex flex-col items-center justify-between">
           <p className="text-lg font-bold text-black">
             {`$${product.value?.toFixed(2)}`}
           </p>
           <button
             onClick={handleRequestClick}
-            className="flex items-center space-x-1.5 rounded-lg bg-green-500 px-4 py-1.5 text-white hover:bg-green-600"
+            className="flex items-center w-full space-x-1.5 rounded-lg bg-green-500 px-4 py-1.5 text-white hover:bg-green-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

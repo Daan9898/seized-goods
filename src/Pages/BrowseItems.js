@@ -112,9 +112,11 @@ const BrowseItems = () => {
       {/* Product Grid */}
       <div className="p-6">
         <div className="grid max-w-6xl mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {items.map((item) => (
-            <ProductCard key={item.id} product={item} />
-          ))}
+          {items.length === 0 ? (
+            <p className="text-gray-700 text-lg">No products to display</p>
+          ) : (
+            items.map((item) => <ProductCard key={item.id} product={item} />)
+          )}
         </div>
       </div>
     </div>
