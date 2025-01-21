@@ -1,7 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout, setError } from "../store/authSlice";
+import ContactUsForm from "../Components/ContactUsForm";
 
 const LandingPage = () => {
+  const user = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        dispatch(setError(error));
+      });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Sticky Navbar */}
@@ -56,18 +75,37 @@ const LandingPage = () => {
 
           {/* Login / Sign Up Section */}
           <div className="flex items-center space-x-4">
-            <Link
-              to="/Login"
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
-            >
-              Login
-            </Link>
-            <Link
-              to="/Register"
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-green-500 rounded-lg text-sm font-semibold"
-            >
-              Sign Up
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/browse-items"
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
+                >
+                  App
+                </Link>
+                <Link
+                  onClick={handleLogout}
+                  className="bg-slate-700 text-gray-400 px-4 py-2 rounded-md m-4"
+                >
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/Login"
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/Register"
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-green-500 rounded-lg text-sm font-semibold"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -76,18 +114,17 @@ const LandingPage = () => {
         {/* Welcome Banner */}
         <section id="welcome" className="py-32 bg-white">
           <div className="px-12 mx-auto max-w-7xl">
-            <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
+            <div className="w-full mt-20 mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
               <h1 className="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight">
                 <span>Start</span>{" "}
                 <span className="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-purple-500 lg:inline">
-                  building a buzz
+                  making a difference
                 </span>{" "}
-                <span>around your product?</span>
+                <span>with your donations</span>
               </h1>
               <p className="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
-                Start gaining the traction you've always wanted with our
-                next-level templates and designs. Crafted to help you tell your
-                story.
+                Empower social organizations by reallocating goods to where
+                they're needed most. Together, we can create meaningful change.
               </p>
               <div className="mb-4 space-x-0 md:space-x-2 md:mb-8">
                 <a
@@ -109,7 +146,7 @@ const LandingPage = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  href="/learn-more"
                   className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg bg-gray-100 rounded-2xl sm:w-auto sm:mb-0"
                 >
                   Learn More
@@ -130,30 +167,11 @@ const LandingPage = () => {
                 </a>
               </div>
             </div>
-
-            <div className="w-full mx-auto mt-20 text-center md:w-10/12">
-              <div className="relative z-0 w-full mt-8">
-                <div className="relative overflow-hidden shadow-2xl">
-                  <div className="flex items-center flex-none px-4 bg-green-400 rounded-b-none h-11 rounded-xl">
-                    <div className="flex space-x-1.5">
-                      <div className="w-3 h-3 border-2 border-white rounded-full"></div>
-                      <div className="w-3 h-3 border-2 border-white rounded-full"></div>
-                      <div className="w-3 h-3 border-2 border-white rounded-full"></div>
-                    </div>
-                  </div>
-                  <img
-                    src="https://cdn.devdojo.com/images/march2021/green-dashboard.jpg"
-                    alt="Dashboard Preview"
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="relative pt-16">
+        <section id="how-it-works" className="relative">
           <div className="container mx-auto">
             <div className="flex flex-wrap items-center">
               {/* Left Side Card */}
@@ -189,9 +207,11 @@ const LandingPage = () => {
                   <div className="w-full md:w-6/12 px-4">
                     <div className="relative flex flex-col mt-4">
                       <div className="px-4 py-5 flex-auto">
-                        <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-white">
-                          <i className="fas fa-box"></i>
-                        </div>
+                        <img
+                          src="/assets/images/searchItemIcon.png"
+                          className="w-20"
+                          alt=""
+                        />
                         <h6 className="text-xl mb-1 font-semibold">
                           Browse Goods
                         </h6>
@@ -664,110 +684,7 @@ const LandingPage = () => {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-16 ">
-          <div className="flex justify-center items-center w-full">
-            {/* Form Container */}
-            <div className="container mx-auto my-4 px-4 lg:px-20">
-              <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl bg-white">
-                <div className="flex">
-                  <h1 className="font-bold uppercase text-5xl">
-                    Send us a <br /> message
-                  </h1>
-                </div>
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="First Name*"
-                  />
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="Last Name*"
-                  />
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="email"
-                    placeholder="Email*"
-                  />
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="number"
-                    placeholder="Phone*"
-                  />
-                </div>
-                <div className="my-4">
-                  <textarea
-                    placeholder="Message*"
-                    className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                  ></textarea>
-                </div>
-                <div className="my-2 w-1/2 lg:w-1/4">
-                  <button className="uppercase text-sm font-bold tracking-wide bg-green-500 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
-                    Send Message
-                  </button>
-                </div>
-              </div>
-
-              {/* Contact Info Section */}
-              <div className="w-full lg:-mt-96 lg:w-2/6 px-8 py-12 ml-auto bg-green-500 rounded-2xl">
-                <div className="flex flex-col text-white">
-                  <h1 className="font-bold uppercase text-4xl my-4">
-                    Drop in our office
-                  </h1>
-                  <p className="text-white">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam tincidunt arcu diam, eu feugiat felis fermentum id.
-                    Curabitur vitae nibh viverra, auctor turpis sed, scelerisque
-                    ex.
-                  </p>
-
-                  <div className="flex my-4 w-2/3 lg:w-1/2">
-                    <div className="flex flex-col">
-                      <i className="fas fa-map-marker-alt pt-2 pr-2" />
-                    </div>
-                    <div className="flex flex-col">
-                      <h2 className="text-2xl">Main Office</h2>
-                      <p className="text-white">
-                        5555 Tailwind RD, Pleasant Grove, UT 73533
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex my-4 w-2/3 lg:w-1/2">
-                    <div className="flex flex-col">
-                      <i className="fas fa-phone-alt pt-2 pr-2" />
-                    </div>
-                    <div className="flex flex-col">
-                      <h2 className="text-2xl">Call Us</h2>
-                      <p className="text-white">Tel: xxx-xxx-xxx</p>
-                      <p className="text-white">Fax: xxx-xxx-xxx</p>
-                    </div>
-                  </div>
-
-                  <div className="flex my-4 w-2/3 lg:w-1/2">
-                    <a
-                      href="https://www.facebook.com/ENLIGHTENEERING/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-full bg-white h-8 w-8 inline-block mx-1 text-center pt-1"
-                    >
-                      <i className="fab fa-facebook-f text-blue-900" />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/company/enlighteneering-inc-"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-full bg-white h-8 w-8 inline-block mx-1 text-center pt-1"
-                    >
-                      <i className="fab fa-linkedin-in text-blue-900" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactUsForm />
       </main>
 
       {/* Footer */}

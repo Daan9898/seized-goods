@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,64 +6,49 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import LandingPage from "./Pages/LandingPage";
 import Auth from "./Pages/Auth";
 import BrowseItems from "./Pages/BrowseItems";
-import Navbar from "./Components/Navbar";
 import ProductDetails from "./Components/ProductDetails";
 import mockProducts from "./data/mockProducts.json";
 import RequestSubmission from "./Pages/RequestSubmission";
 import MyRequests from "./Pages/MyRequests";
 import Confirmation from "./Pages/Confirmation";
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "./store/authSlice";
+import Sidebar from "./Components/Sidebar";
+import OrganizationsList from "./Pages/OrganizationsList";
+import OrganizationDetails from "./Pages/OrganizationDetails";
+import OrganizationEdit from "./Pages/AdminDashboard/OrganizationEdit";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user && user.accessToken) {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
       dispatch(fetchCurrentUser());
     }
-  }, [user, dispatch]);
-
-  const [userRequests, setUserRequests] = useState([
-    {
-      id: 1,
-      productName: "Wooden Desk",
-      details: "For educational purposes in a local school.",
-      status: "Pending",
-      instructions: "",
-    },
-    {
-      id: 2,
-      productName: "Laptop",
-      details: "To support online education for underprivileged children.",
-      status: "Approved",
-      instructions: "Pick up at 123 Main Street, Austin, TX.",
-    },
-    {
-      id: 3,
-      productName: "Leather Chair",
-      details: "Furniture for a non-profit office.",
-      status: "Rejected",
-      instructions: "",
-    },
-  ]);
+  }, [dispatch]);
 
   // Custom component to handle conditional rendering
   const Layout = ({ children }) => {
     const location = useLocation();
 
-    // Hide navbar on these pages
-    const hideNavbarPaths = ["/", "/login"];
-    const hideNavbar = hideNavbarPaths.includes(location.pathname);
+    // Hide navbar and sidebar on these pages
+    const hidePaths = ["/", "/login", "/Login"];
+    const hideSidebar = hidePaths.includes(location.pathname);
 
     return (
-      <div className="min-h-screen">
-        {!hideNavbar && <Navbar user={user} />}
-        {children}
+      <div className="min-h-screen flex">
+        {!hideSidebar && <Sidebar user={user} />}{" "}
+        {/* Sidebar is conditionally rendered */}
+        <div className="flex-1">
+          <main>{children}</main>
+        </div>
       </div>
     );
   };
@@ -72,24 +57,90 @@ const App = () => {
     <Router>
       <Layout>
         <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Auth />} />
+
+          {/* Protected Routes */}
           <Route
-            path="/"
+            path="/browse-items"
             element={
-              user ? <Navigate to="/browse-items" replace /> : <LandingPage />
+              <ProtectedRoute>
+                <BrowseItems />
+              </ProtectedRoute>
             }
           />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/browse-items" element={<BrowseItems />} />
           <Route
             path="/product/:id"
-            element={<ProductDetails products={mockProducts} />}
+            element={
+              <ProtectedRoute>
+                <ProductDetails products={mockProducts} />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/request-submission" element={<RequestSubmission />} />
+          <Route
+            path="/request-submission"
+            element={
+              <ProtectedRoute>
+                <RequestSubmission />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/my-requests"
-            element={<MyRequests requests={userRequests} />}
+            element={
+              <ProtectedRoute>
+                <MyRequests />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/confirmation" element={<Confirmation />} />
+          <Route
+            path="/confirmation"
+            element={
+              <ProtectedRoute>
+                <Confirmation />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Route */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organizations"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <OrganizationsList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organization/:id"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <OrganizationDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/organization/:id/edit"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <OrganizationEdit />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all for undefined routes */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
