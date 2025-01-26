@@ -18,22 +18,21 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <article className="rounded-xl bg-white p-4 shadow-lg hover:shadow-xl hover:scale-105 transform duration-300">
-      <div className="relative flex items-end overflow-hidden rounded-xl">
+    <article className="flex flex-col rounded-xl bg-white p-4 shadow-lg hover:shadow-xl transform duration-300 hover:scale-105">
+      <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-gray-100">
         <img
           src={product.images?.[0]?.url || "https://via.placeholder.com/300"}
           alt={product.name}
-          className="w-full h-64 object-contain"
+          className="w-full h-full object-contain aspect-square"
         />
       </div>
-      <div className="mt-4 p-2">
-        <h2 className="text-slate-700 text-lg font-semibold">
-          {" "}
+      <div className="mt-4 flex flex-col flex-1 p-2">
+        <h2 className="text-slate-700 text-lg font-semibold min-h-[3rem]">
           {product.name.length > 20
             ? product.name.slice(0, 17) + "..."
             : product.name}
         </h2>
-        <p className="mt-1 text-sm text-slate-500 line-clamp-2">
+        <p className="mt-1 text-sm text-slate-500 line-clamp-2 min-h-[3rem]">
           {product.description}
         </p>
         <div className="flex justify-between items-center mt-2 gap-2">
@@ -48,13 +47,13 @@ const ProductCard = ({ product }) => {
             {product.category?.name || "Unknown"}
           </span>
         </div>
-        <div className="mt-3 flex flex-col items-center justify-between">
-          <p className="text-lg font-bold text-black">
+        <div className="mt-3 flex flex-col flex-1 items-center justify-between">
+          <p className="text-lg self-start font-bold text-black">
             {`$${product.value?.toFixed(2)}`}
           </p>
           <button
             onClick={handleRequestClick}
-            className="flex items-center w-full space-x-1.5 rounded-lg bg-green-500 px-4 py-1.5 text-white hover:bg-green-600"
+            className="mt-2 flex items-center w-full space-x-1.5 rounded-lg bg-green-500 px-4 py-1.5 text-white hover:bg-green-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
