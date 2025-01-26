@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient";
 
@@ -6,10 +7,11 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const getConditionStyle = (condition) => {
     if (condition === "New") {
@@ -34,7 +36,17 @@ const ProductDetails = () => {
     };
 
     fetchProductDetails();
-  }, [id]);
+  }, [id, user]);
+
+  const handleDeleteItem = async (id) => {
+    try {
+      await apiClient.delete(`/api/v1/seized-goods/${id}`);
+      navigate("/browse-items");
+    } catch (error) {
+      console.log(error);
+      console.log("Could not delete item with ID:", id);
+    }
+  };
 
   const handleRequestClick = () => {
     navigate("/request-submission", {
@@ -221,16 +233,53 @@ const ProductDetails = () => {
           </p>
 
           <div className="flex py-4 space-x-4 mt-6">
+            {!user.role === "ADMIN" && (
+              <button
+                onClick={handleRequestClick}
+                type="button"
+                className="h-14 px-6 py-2 font-semibold rounded-xl bg-green-500 hover:bg-green-600 text-white"
+              >
+                Request Item
+              </button>
+            )}
             <button
-              onClick={handleRequestClick}
+              onClick={() => setIsModalOpen(true)} 
               type="button"
-              className="h-14 px-6 py-2 font-semibold rounded-xl bg-green-500 hover:bg-green-600 text-white"
+              className="h-14 px-6 py-2 font-semibold rounded-xl bg-red-500 hover:bg-red-600 text-white"
             >
-              Request Item
+              Delete Item
             </button>
+            
           </div>
         </div>
       </div>
+       {/* Delete Confirmation Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg w-96 p-6">
+            <h3 className="text-lg font-bold text-gray-800 mb-4">
+              Are you sure you want to delete this item?
+            </h3>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setIsModalOpen(false)} // Close modal
+                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-gray-800"
+              >
+                No
+              </button>
+              <button
+                onClick={() => {
+                  handleDeleteItem(product.id);
+                  setIsModalOpen(false); // Close modal after deletion
+                }}
+                className="px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 text-white"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Recommended Items Section */}
       <div className="my-12">
