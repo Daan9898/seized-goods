@@ -22,6 +22,7 @@ import Sidebar from "./Components/Sidebar";
 import OrganizationsList from "./Pages/OrganizationsList";
 import OrganizationDetails from "./Pages/OrganizationDetails";
 import OrganizationEdit from "./Pages/AdminDashboard/OrganizationEdit";
+import EditItemForm from "./Components/EditItemForm";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -136,6 +137,15 @@ const App = () => {
             element={
               <ProtectedRoute role="ADMIN">
                 <OrganizationEdit />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/edit-item/:itemId"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <EditItemForm />
               </ProtectedRoute>
             }
           />

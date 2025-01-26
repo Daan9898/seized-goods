@@ -1,41 +1,50 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../services/apiClient";
 
-function AddNewItemForm() {
+function EditItemForm() {
+  const { itemId } = useParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [condition, setCondition] = useState("");
   const [files, setFiles] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const response = await apiClient.get(`/api/v1/seized-goods/${itemId}`);
+        const item = response.data;
+        setName(item.name);
+        setDescription(item.description);
+        setValue(item.value);
+        setQuantity(item.quantity);
+        setSelectedCategory(item.categoryId);
+        setCondition(item.condition);
+      } catch (error) {
+        console.error("Error fetching item:", error);
+        setError("Failed to fetch item data.");
+      }
+    };
+
     const fetchCategories = async () => {
       try {
         const response = await apiClient.get("/api/v1/categories");
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
-        if (error.response) {
-          setError(
-            `Failed to fetch categories: ${error.response.status} - ${
-              error.response.data.message || "Unknown error"
-            }`
-          );
-        } else if (error.request) {
-          setError("No response received. Please check your network.");
-        } else {
-          setError("An unexpected error occurred.");
-        }
+        setError("Failed to fetch categories.");
       }
     };
+
+    fetchItem();
     fetchCategories();
-  }, []);
+  }, [itemId]);
 
   const handleFileChange = (e) => {
     setFiles(e.target.files);
@@ -66,7 +75,6 @@ function AddNewItemForm() {
 
     const formData = new FormData();
 
-    // Ensure the correct types before appending
     formData.append("name", name);
     formData.append("description", description);
     formData.append("value", parseFloat(value).toFixed(2));
@@ -79,7 +87,7 @@ function AddNewItemForm() {
     }
 
     try {
-      await apiClient.post("/api/v1/seized-goods", formData, {
+      await apiClient.put(`/api/v1/seized-goods/${itemId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -87,13 +95,12 @@ function AddNewItemForm() {
       });
       navigate("/browse-items");
     } catch (error) {
-      console.error(error);
-      if (error.response && error.response.data.errors) {
-        const firstError =
-          error.response.data.errors[0]?.msg || "Unknown error occurred.";
-        setError(firstError);
+      console.error("Error updating item:", error);
+      if (error.response) {
+        console.error("Server response data:", error.response.data); // Log detailed error
+        setError(error.response.data.message || "Failed to update the item.");
       } else {
-        setError("Failed to create a good. Please try again.");
+        setError("Failed to update the item. Please try again.");
       }
     }
   };
@@ -101,7 +108,7 @@ function AddNewItemForm() {
   return (
     <div className="w-full min-h-screen bg-gray-50 flex items-center p-4">
       <div className="max-w-xlg w-full max-w-[800px] bg-white shadow-lg rounded-lg p-6 border">
-        <h2 className="text-3xl font-bold text-gray-700 mb-8">Register Item</h2>
+        <h2 className="text-3xl font-bold text-gray-700 mb-8">Edit Item</h2>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <form
           onSubmit={handleSubmit}
@@ -246,7 +253,7 @@ function AddNewItemForm() {
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
           >
-            Create Good
+            Update Good
           </button>
         </form>
       </div>
@@ -254,4 +261,4 @@ function AddNewItemForm() {
   );
 }
 
-export default AddNewItemForm;
+export default EditItemForm;

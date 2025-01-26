@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import AddNewItemForm from "../../Components/AddNewItemForm";
 // Icons
-import {
-  FaPlus,
-  FaEdit,
-  FaTrash,
-  FaUsers,
-  FaClipboardList,
-  FaEye,
-} from "react-icons/fa";
+import { FaPlus, FaUsers, FaClipboardList } from "react-icons/fa";
 import { MdOutlineInventory } from "react-icons/md";
 import UserRequests from "./UsersRequests";
 import ManageUsers from "./ManageUsers";
@@ -23,10 +16,6 @@ const AdminDashboard = () => {
     switch (currentView) {
       case "addItem":
         return <AddNewItemForm />;
-      case "editItem":
-        return <div>Edit Item Form Placeholder</div>;
-      case "deleteItem":
-        return <div>Delete Item Confirmation Placeholder</div>;
       case "viewRequests":
         return <UserRequests />;
       case "viewUsers":
@@ -81,20 +70,6 @@ const AdminDashboard = () => {
             >
               <FaPlus />
               Add New Product
-            </button>
-            <button
-              onClick={() => setCurrentView("editItem")}
-              className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md w-full"
-            >
-              <FaEdit />
-              Edit Product
-            </button>
-            <button
-              onClick={() => setCurrentView("deleteItem")}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md w-full"
-            >
-              <FaTrash />
-              Delete Product
             </button>
           </div>
         </div>

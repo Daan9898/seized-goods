@@ -14,7 +14,6 @@ const OrganizationDetails = () => {
     const fetchOrganizationDetails = async () => {
       try {
         const response = await apiClient.get(`/api/v1/organizations/${id}`);
-        console.log("response data organization:", response.data);
         setOrganization(response.data);
       } catch (err) {
         setError("Error fetching organization details");

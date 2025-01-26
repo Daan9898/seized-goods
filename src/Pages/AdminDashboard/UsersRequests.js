@@ -26,7 +26,7 @@ const UserRequests = () => {
   }
 
   if (error) {
-    return <div className="text-center py-6 text-red-500">Error: {error}</div>;
+    return <div className="text-center py-6 text-red-500">{error}</div>;
   }
 
   return (

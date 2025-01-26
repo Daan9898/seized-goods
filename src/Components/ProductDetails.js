@@ -54,6 +54,10 @@ const ProductDetails = () => {
     });
   };
 
+  const handleEditItem = () => {
+    navigate(`/edit-item/${product.id}`);
+  };
+
   if (loading) {
     return (
       <div className="text-center py-10">
@@ -71,39 +75,6 @@ const ProductDetails = () => {
       </div>
     );
   }
-
-  const placeholders = ["1", "2", "3", "4"];
-  const recommendedPlaceholders = [
-    {
-      id: "placeholder-1",
-      name: "Placeholder Item 1",
-      description: "This is a placeholder for a recommended item.",
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: "placeholder-2",
-      name: "Placeholder Item 2",
-      description: "This is a placeholder for a recommended item.",
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: "placeholder-3",
-      name: "Placeholder Item 3",
-      description: "This is a placeholder for a recommended item.",
-      imageUrl: "https://via.placeholder.com/150",
-    },
-    {
-      id: "placeholder-4",
-      name: "Placeholder Item 4",
-      description: "This is a placeholder for a recommended item.",
-      imageUrl: "https://via.placeholder.com/150",
-    },
-  ];
-
-  const recommendedItems =
-    product.recommendedItems?.length > 0
-      ? product.recommendedItems
-      : recommendedPlaceholders;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -175,7 +146,7 @@ const ProductDetails = () => {
 
           {/* Image Thumbnails */}
           <div className="flex -mx-2">
-            {placeholders.map((placeholder, index) => (
+            {[0, 1, 2, 3].map((index) => (
               <div key={index} className="flex-1 px-2">
                 <button
                   onClick={() => setCurrentImageIndex(index)}
@@ -190,9 +161,7 @@ const ProductDetails = () => {
                       className="w-full h-full object-cover rounded-lg"
                     />
                   ) : (
-                    <span className="text-5xl text-gray-400">
-                      {placeholder}
-                    </span>
+                    <span className="text-5xl text-gray-400">{index + 1}</span>
                   )}
                 </button>
               </div>
@@ -242,18 +211,29 @@ const ProductDetails = () => {
                 Request Item
               </button>
             )}
-            <button
-              onClick={() => setIsModalOpen(true)} 
-              type="button"
-              className="h-14 px-6 py-2 font-semibold rounded-xl bg-red-500 hover:bg-red-600 text-white"
-            >
-              Delete Item
-            </button>
-            
+            {user.role === "ADMIN" && ( // Only show Edit and Delete buttons for admins
+              <>
+                <button
+                  onClick={handleEditItem}
+                  type="button"
+                  className="h-14 px-6 py-2 font-semibold rounded-xl bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  Edit Item
+                </button>
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  type="button"
+                  className="h-14 px-6 py-2 font-semibold rounded-xl bg-red-500 hover:bg-red-600 text-white"
+                >
+                  Delete Item
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
-       {/* Delete Confirmation Modal */}
+
+      {/* Delete Confirmation Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg w-96 p-6">
@@ -262,7 +242,7 @@ const ProductDetails = () => {
             </h3>
             <div className="flex justify-end space-x-4">
               <button
-                onClick={() => setIsModalOpen(false)} // Close modal
+                onClick={() => setIsModalOpen(false)}
                 className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-gray-800"
               >
                 No
@@ -270,7 +250,7 @@ const ProductDetails = () => {
               <button
                 onClick={() => {
                   handleDeleteItem(product.id);
-                  setIsModalOpen(false); // Close modal after deletion
+                  setIsModalOpen(false);
                 }}
                 className="px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 text-white"
               >
@@ -287,17 +267,13 @@ const ProductDetails = () => {
           Recommended Items
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {recommendedItems.map((item) => (
+          {product.recommendedItems?.map((item) => (
             <div
               key={item.id}
               className="border rounded-lg p-4 shadow-sm hover:shadow-lg"
             >
               <img
-                src={
-                  item.imageUrl ||
-                  item.photo ||
-                  "https://via.placeholder.com/150"
-                }
+                src={item.imageUrl || "https://via.placeholder.com/150"}
                 alt={item.name}
                 className="w-full h-40 object-cover rounded-lg mb-4"
               />
