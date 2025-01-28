@@ -57,13 +57,13 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Product Management */}
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-white shadow-md rounded-lg p-6 flex flex-col h-full">
           <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
             <MdOutlineInventory size={24} className="text-blue-500" />
             Product Management
           </h2>
-          <p className="text-gray-600 mt-2">Add, edit, or delete products.</p>
-          <div className="mt-4 space-y-3">
+          <p className="text-gray-600 my-3">Add, edit, or delete products.</p>
+          <div className="mt-auto space-y-3">
             <button
               onClick={() => setCurrentView("addItem")}
               className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md w-full"
@@ -75,37 +75,41 @@ const AdminDashboard = () => {
         </div>
 
         {/* User Requests */}
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-white shadow-md rounded-lg p-6 flex flex-col h-full">
           <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
             <FaClipboardList size={24} className="text-green-500" />
             User Requests
           </h2>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 my-3">
             View requests made by users for products.
           </p>
-          <button
-            onClick={() => setCurrentView("viewRequests")}
-            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 w-full"
-          >
-            View Requests
-          </button>
+          <div className="mt-auto">
+            <button
+              onClick={() => setCurrentView("viewRequests")}
+              className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md w-full"
+            >
+              View Requests
+            </button>
+          </div>
         </div>
 
         {/* User Management */}
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-white shadow-md rounded-lg p-6 flex flex-col h-full">
           <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
             <FaUsers size={24} className="text-purple-500" />
             User Management
           </h2>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 my-3">
             View and manage registered users.
           </p>
-          <button
-            onClick={() => setCurrentView("viewUsers")}
-            className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md mt-4 w-full"
-          >
-            View Users
-          </button>
+          <div className="mt-auto">
+            <button
+              onClick={() => setCurrentView("viewUsers")}
+              className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md w-full"
+            >
+              View Users
+            </button>
+          </div>
         </div>
       </div>
 
