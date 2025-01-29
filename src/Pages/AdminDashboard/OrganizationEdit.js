@@ -43,7 +43,6 @@ const OrganizationEdit = () => {
     e.preventDefault();
     try {
       await apiClient.put(`/api/v1/organizations/${id}`, organization);
-      alert("Organization updated successfully!");
       navigate(`/organization/${id}`);
     } catch (err) {
       alert("Error updating organization");

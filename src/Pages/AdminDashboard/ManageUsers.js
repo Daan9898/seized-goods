@@ -9,7 +9,7 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
-  const [userToEdit, setUserToEdit] = useState(null);
+  const [setUserToEdit] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {

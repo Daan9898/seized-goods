@@ -1,10 +1,13 @@
+import apiClient from "../../services/apiClient.js";
 import React, { useState, useEffect } from "react";
-import apiClient from "../../services/apiClient";
+import ApproveRequestModal from "../../Components/ApproveRequestModal";
 
 const UserRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+  const [requestToApprove, setRequestToApprove] = useState(null);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -20,6 +23,25 @@ const UserRequests = () => {
 
     fetchRequests();
   }, []);
+
+  const openApproveModal = (request) => {
+    setRequestToApprove(request);
+    setIsApproveModalOpen(true);
+  };
+
+  const closeApproveModal = () => {
+    setIsApproveModalOpen(false);
+    setRequestToApprove(null);
+  };
+
+  const handleApproveSuccess = (approvedRequest) => {
+    // Update the requests list by replacing the approved request
+    setRequests((prevRequests) =>
+      prevRequests.map((request) =>
+        request.id === approvedRequest.id ? approvedRequest : request
+      )
+    );
+  };
 
   if (loading) {
     return <div className="text-center py-6">Loading requests...</div>;
@@ -43,31 +65,48 @@ const UserRequests = () => {
               key={request.id}
               className="border rounded-lg p-4 hover:shadow-md transition"
             >
-              <div className="flex justify-between">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {request.seizedGood.name || "Unnamed Request"}
-                </h3>
-                <span className="text-gray-500 text-sm">
-                  {new Date(request?.createdAt).toLocaleDateString()}
-                </span>
-              </div>
-              <p className="text-gray-600 mt-2">
-                {request.seizedGood.description}
-              </p>
-              <div className="text-sm text-gray-500 mt-2">
-                <span>
-                  Requested by: {request.organization?.name || "Anonymous"}
-                </span>
-                <div className="justify-between">
-                  <p className="text-gray-600 mt-2">
-                    Contact:{" "}
-                    {request.organization?.contactPerson || "Not available"}
-                  </p>
+              <div className="flex flex-col">
+                <div className="flex justify-between">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {request.seizedGood.name || "Unnamed Request"}
+                  </h3>
+                  <button
+                    onClick={() => openApproveModal(request)}
+                    className="justify-self-center bg-blue-600 text-white p-2 rounded-md"
+                  >
+                    Approve
+                  </button>
+                </div>
+                <p className="text-gray-600 mt-2">
+                  {request.seizedGood.description}
+                </p>
+                <div className="text-sm text-gray-500 mt-2">
+                  <span>
+                    Requested by: {request.organization?.name || "Anonymous"}
+                  </span>
+                  <div className="justify-between">
+                    <p className="text-gray-600 mt-2">
+                      Contact:{" "}
+                      {request.organization?.contactPerson || "Not available"}
+                    </p>
+                    <span className="text-gray-500 text-sm">
+                      {new Date(request?.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
               </div>
             </li>
           ))}
         </ul>
+      )}
+
+      {/* Render the ApproveRequestModal */}
+      {isApproveModalOpen && (
+        <ApproveRequestModal
+          requestToApprove={requestToApprove}
+          closeApproveModal={closeApproveModal}
+          onApproveSuccess={handleApproveSuccess}
+        />
       )}
     </div>
   );

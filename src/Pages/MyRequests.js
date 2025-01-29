@@ -44,7 +44,7 @@ const MyRequests = () => {
       <h1 className="text-2xl font-bold text-gray-800 mb-6">
         Your requested items:
       </h1>
-      {requests && requests.length === 0 ? (
+      {requests && requests.length !== 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {requests.map((request) => (
             <div

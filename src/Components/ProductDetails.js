@@ -202,7 +202,7 @@ const ProductDetails = () => {
           </p>
 
           <div className="flex py-4 space-x-4 mt-6">
-            {!user.role === "ADMIN" && (
+            {user.role !== "ADMIN" && (
               <button
                 onClick={handleRequestClick}
                 type="button"
