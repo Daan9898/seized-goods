@@ -1,36 +1,65 @@
-// ForgotPassword.js
-import React, { useState } from "react";
+import { useState } from "react";
+import apiClient from "../services/apiClient";
 
-const ForgotPassword = ({ onReset, onSwitch }) => {
+const ForgotPassword = ({ onSwitch }) => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onReset(email);
+    if (!email) {
+      setError("Please enter an email");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setMessage("");
+
+    try {
+      const response = await apiClient.post(
+        "/api/v1/users/reset-password/request",
+        { email }
+      );
+      setMessage("Password reset email sent.");
+      console.log(response.data);
+    } catch (error) {
+      setError("Failed to request password reset.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && <p className="text-red-500">{error}</p>}
+      {message && <p className="text-green-500">{message}</p>}
       <div>
-        <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+        <label className="block mb-2 text-sm text-gray-600">
           Email Address
         </label>
         <input
           type="email"
-          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="block w-full px-5 py-3 text-gray-700 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+          className="block w-full px-4 py-2 border rounded-md"
         />
       </div>
       <button
         type="submit"
-        className="w-full px-6 py-3 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
+        disabled={loading}
+        className="w-full py-2 bg-blue-500 text-white rounded-md"
       >
-        Reset Password
+        {loading ? "Requesting..." : "Reset Password"}
       </button>
       <div className="mt-4 text-sm">
-        <button onClick={onSwitch} className="text-blue-500 hover:underline">
+        <button
+          type="button"
+          onClick={onSwitch}
+          className="text-blue-500 hover:underline"
+        >
           Back to Login
         </button>
       </div>

@@ -13,7 +13,6 @@ const Auth = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Reset loading state when switching views
     dispatch({ type: "auth/resetLoading" });
   }, [dispatch]);
 
