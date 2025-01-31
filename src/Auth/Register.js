@@ -301,7 +301,7 @@ const Register = ({ onRegister, onSwitch }) => {
         Register
       </button>
       <div className="mt-4 text-sm flex justify-center">
-        <p className="mr-1">Already have an account?</p>
+        <p className="mr-1 dark:text-gray-500">Already have an account?</p>
         <button onClick={onSwitch} className="text-blue-500 hover:underline">
           Login
         </button>

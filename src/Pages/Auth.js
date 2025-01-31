@@ -27,12 +27,7 @@ const Auth = () => {
 
   const handleRegister = async (accountData) => {
     try {
-      // Perform registration logic
-      const response = await apiClient.post(
-        "/api/v1/organizations/register",
-        accountData
-      );
-      console.log("Registration successful:", response.data);
+      await apiClient.post("/api/v1/organizations/register", accountData);
       alert("Registration successful! Please log in.");
       setView("login");
     } catch (error) {
